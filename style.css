@@ -1,0 +1,39 @@
+:root {
+  --bg: #F5F1EA; --surface: #FFFDF8; --ink: #1F1B16; --ink-soft: #6B6358;
+  --primary: #3F7A70; --primary-soft: #DDEAE4; --line: #E2D6C4; --accent: #B9532F;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1E1A16; --surface: #2B2621; --ink: #F3ECE2; --ink-soft: #B8AC9C;
+    --primary: #6FB3A6; --primary-soft: #263F39; --line: #40372E; --accent: #E0815A;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+main { max-width: 720px; margin: 0 auto; padding: 32px 16px 64px; }
+header.site { max-width: 720px; margin: 0 auto; padding: 20px 16px 0; display: flex; gap: 16px; align-items: center; justify-content: space-between; }
+header.site a.brand { font-weight: 600; color: var(--ink); text-decoration: none; }
+header.site nav a { color: var(--ink-soft); text-decoration: none; margin-left: 16px; font-size: 15px; }
+h1, h2, h3 { font-family: "New York", "Iowan Old Style", Georgia, serif; line-height: 1.25; }
+h1 { font-size: 34px; margin: 8px 0 4px; }
+h2 { font-size: 23px; margin: 40px 0 8px; }
+h3 { font-size: 19px; margin: 28px 0 6px; }
+a { color: var(--primary); }
+.meta { color: var(--ink-soft); font-size: 15px; margin: 0 0 24px; }
+.summary { background: var(--primary-soft); border-radius: 16px; padding: 4px 20px; margin: 20px 0; }
+.table-wrap { overflow-x: auto; margin: 12px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; background: var(--surface); border-radius: 12px; overflow: hidden; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { color: var(--ink-soft); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+.cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 24px 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px; }
+.card h2 { margin: 0 0 6px; font-size: 21px; }
+.card p { margin: 0 0 12px; color: var(--ink-soft); }
+.card a { margin-right: 14px; }
+footer { color: var(--ink-soft); font-size: 14px; margin-top: 56px; border-top: 1px solid var(--line); padding-top: 16px; }
