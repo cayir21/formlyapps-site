@@ -20,7 +20,7 @@ CONVERT_MAIL = "formlyconvert@gmail.com"
 
 # MARK: Şablon
 
-def page(path: str, title: str, description: str, body: str, theme: str = "study") -> None:
+def page(path: str, title: str, description: str, body: str, theme: str = "study", lang: str = "tr") -> None:
     nav = [
         ("/formlystudy/", "FormlyStudy"),
         ("/formlyconvert/", "FormlyConvert"),
@@ -31,7 +31,7 @@ def page(path: str, title: str, description: str, body: str, theme: str = "study
         for href, label in nav
     )
     document = f"""<!doctype html>
-<html lang="tr">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,6 +55,7 @@ def page(path: str, title: str, description: str, body: str, theme: str = "study
 <nav aria-label="Alt menü">
 <a href="/formlystudy/gizlilik/">FormlyStudy gizlilik</a>
 <a href="/formlystudy/destek/">FormlyStudy destek</a>
+<a href="/formlyconvert/gizlilik/">FormlyConvert gizlilik</a>
 <a href="/formlyconvert/destek/">FormlyConvert destek</a>
 <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Kullanım koşulları</a>
 </nav>
@@ -93,7 +94,7 @@ def home() -> None:
 <div><span class="badge">App Store'da</span><h2>FormlyConvert</h2>
 <p>PDF, Word, Excel, PowerPoint, görsel ve UDF dosyalarını dönüştürür; PDF'leri sıkıştırır, doldurur ve imzalar. Yanında kâğıttan dostu Formi.</p></div>
 <img class="mascot" src="/assets/formi.svg" alt="Formi">
-<div class="actions"><a class="button primary" href="{CONVERT_STORE}">App Store'da aç</a><a class="button secondary" href="/formlyconvert/">Tanı</a></div>
+<div class="actions"><a class="button primary" href="{CONVERT_STORE}">App Store'da aç</a><a class="button secondary" href="/formlyconvert/">Tanı</a><a class="button secondary" href="/formlyconvert/gizlilik/">Gizlilik</a></div>
 </article>
 <article class="app-card theme-study">
 <div><span class="badge">Yakında</span><h2>FormlyStudy</h2>
@@ -150,20 +151,20 @@ def convert() -> None:
 <div>
 <p class="eyebrow">FormlyConvert · App Store'da</p>
 <h1>Dosyan hangi biçimde olursa olsun.</h1>
-<p class="lead">FormlyConvert belgelerini birkaç dokunuşla dönüştürür ve düzenler. PDF'leri sıkıştırır, formları doldurur, imzalar; dışarıdan gelen dosyaları "Formly ile aç" ile doğrudan karşılar.</p>
-<a class="button primary" href="{CONVERT_STORE}">App Store'da aç</a> <a class="button ghost" href="/formlyconvert/destek/">Destek</a>
+<p class="lead">FormlyConvert belgelerini birkaç dokunuşla dönüştürür ve düzenler. PDF'leri sıkıştırır, doldurur ve imzalar; belgeni özetler, kayıtlarını metne çevirir.</p>
+<a class="button primary" href="{CONVERT_STORE}">App Store'da aç</a> <a class="button ghost" href="/formlyconvert/destek/">Destek</a> <a class="button ghost" href="/formlyconvert/gizlilik/">Gizlilik</a>
 </div>
 <img class="mascot" src="/assets/formi.svg" alt="Formi, FormlyConvert'in maskotu">
 </section>
 <section class="section">
 <h2>Neler yapar?</h2>
 {tiles([
-    ("⇄", "Dönüştürme", "PDF, Word, Excel, PowerPoint, görsel, metin ve UDF arasında dönüştürür."),
-    ("↓", "Akıllı sıkıştırma", "PDF'i küçültür; metin ve bağlantılar korunur, dosya asla büyümez."),
-    ("✎", "Doldur ve imzala", "Form alanlarını doldurur, tarih, işaret ve imzanı ekler."),
-    ("A", "Metin tanıma", "Taranmış belgelerdeki metni okunabilir hâle getirir."),
-    ("◎", "Tam ekran görüntüleyici", "Sayfalar, arama ve hızlı gezinme ile belgeni rahatça okursun."),
-    ("↗", "Formly ile aç", "Mail ya da Dosyalar'dan gelen dosya doğrudan FormlyConvert'te açılır."),
+    ("⇄", "Dönüştürme", "PDF, Word, Excel, PowerPoint, görsel, metin ve UDF arasında dönüştürür; işlem cihazında yapılır."),
+    ("↓", "Sıkıştır, doldur, imzala", "PDF'i küçültür, form alanlarını doldurur, tarih ve imzanı ekler."),
+    ("?", "Belge asistanı", "PDF'ini özetler, sorularını yanıtlar; taranmış sayfaları da okur. Varsayılan olarak cihazında çalışır."),
+    ("♪", "Ses ve videodan metin", "Kayıttaki konuşmayı PDF, Word ya da metin dosyasına çevirir."),
+    ("☁", "iCloud kütüphanesi", "Pro ile kütüphanen aynı Apple hesabındaki cihazlarında görünür."),
+    ("▦", "Widget ve paylaşım", "Son dosyaların ana ekranda; başka uygulamadan paylaşılan dosya doğrudan FormlyConvert'e gelir."),
 ])}
 </section>
 <section class="section">
@@ -218,7 +219,7 @@ def convert_support() -> None:
 <p>Dönüştürülen dosyalar uygulamanın Geçmiş bölümünde durur; oradan paylaşabilir ya da Dosyalar'a kaydedebilirsin.</p>
 <h3>Bir dosyayı başka uygulamadan nasıl açarım?</h3>
 <p>Mail, WhatsApp ya da Dosyalar'da dosyaya uzun bas, Paylaş'ı seç ve FormlyConvert'i seç. Dosya, ona uygun araçlarla birlikte açılır.</p>
-<p class="meta">Kullanım koşulları: <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple standart son kullanıcı sözleşmesi</a>.</p>
+<p class="meta"><a href="/formlyconvert/gizlilik/">Gizlilik politikası</a> · Kullanım koşulları: <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple standart son kullanıcı sözleşmesi</a>.</p>
 </div>"""
     page("/formlyconvert/destek/", "FormlyConvert Destek", "FormlyConvert için destek ve sık sorulan sorular.", body, theme="convert")
 
@@ -229,7 +230,7 @@ def inline(text: str) -> str:
     text = html.escape(text, quote=False)
     text = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r'<a href="\2">\1</a>', text)
-    text = re.sub(r"([\w.+-]+@formlyapps\.com)", r'<a href="mailto:\1">\1</a>', text)
+    text = re.sub(r"(?<![\w/\">])([\w.+-]+@(?:formlyapps\.com|gmail\.com))", r'<a href="mailto:\1">\1</a>', text)
     return text
 
 
@@ -249,7 +250,7 @@ def markdown(source: str) -> tuple[str, str, str]:
             out.append(f"<h2>{inline(line[3:])}</h2>")
         elif line.startswith("### "):
             out.append(f"<h3>{inline(line[4:])}</h3>")
-        elif line.startswith("Son güncelleme:"):
+        elif line.startswith(("Son güncelleme:", "Last updated:")):
             updated = line.strip()
         elif line.startswith("|"):
             rows = []
@@ -284,8 +285,7 @@ def markdown(source: str) -> tuple[str, str, str]:
     return title, updated, "\n".join(out)
 
 
-def study_privacy() -> None:
-    source = STUDY_REPO / "docs" / "legal" / "privacy-policy-tr.md"
+def privacy(source: Path, path: str, description: str, theme: str, lang: str) -> None:
     title, updated, body = markdown(source.read_text(encoding="utf-8"))
     body = body.replace("<p>Kısaca:</p>\n<ul>", '<div class="summary"><p><strong>Kısaca</strong></p><ul>', 1)
     if 'class="summary"' in body:
@@ -293,7 +293,17 @@ def study_privacy() -> None:
         end = body.index("</ul>", start) + len("</ul>")
         body = body[:end] + "</div>" + body[end:]
     content = f'<div class="wrap narrow prose">\n<h1>{inline(title)}</h1>\n<p class="meta">{inline(updated)}</p>\n{body}\n</div>'
-    page("/formlystudy/gizlilik/", title, "FormlyStudy'nin hangi verileri işlediği ve senin seçeneklerin.", content)
+    page(path, title, description, content, theme=theme, lang=lang)
+
+
+def study_privacy() -> None:
+    privacy(STUDY_REPO / "docs" / "legal" / "privacy-policy-tr.md", "/formlystudy/gizlilik/",
+            "FormlyStudy'nin hangi verileri işlediği ve senin seçeneklerin.", "study", "tr")
+
+
+def convert_privacy() -> None:
+    privacy(ROOT / "content" / "formlyconvert-privacy-en.md", "/formlyconvert/gizlilik/",
+            "How FormlyConvert handles documents and other data.", "convert", "en")
 
 
 if __name__ == "__main__":
@@ -304,3 +314,4 @@ if __name__ == "__main__":
     study_support()
     convert_support()
     study_privacy()
+    convert_privacy()
