@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FormlyBite Gizlilik Politikası</title>
+<meta name="description" content="Öğün analizi, günlük, Apple Sağlık ve abonelik soruları.">
+<meta name="theme-color" content="#F5F1EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1E1A16" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://formlyapps.com/formlybite/gizlilik/">
+<link rel="alternate" hreflang="tr" href="https://formlyapps.com/formlybite/gizlilik/">
+<link rel="alternate" hreflang="en" href="https://formlyapps.com/en/formlybite/privacy/">
+<link rel="alternate" hreflang="x-default" href="https://formlyapps.com/en/formlybite/privacy/">
+<link rel="icon" href="/assets/formi.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="theme-bite">
+<header class="site-header"><div class="wrap">
+<a class="brand" href="/"><span class="marks"><img src="/assets/formi.svg" alt=""><img src="/assets/tabi.svg" alt=""></span><span>Formly</span></a>
+<nav aria-label="Ana menü"><a href="/formlystudy/">FormlyStudy</a><a href="/formlyconvert/">FormlyConvert</a><a href="/formlybite/" aria-current="page">FormlyBite</a><a href="/destek/">Destek</a><a class="lang" href="/en/formlybite/privacy/" hreflang="en" lang="en" aria-label="English" title="English">EN</a></nav>
+</div></header>
+<main>
+<div class="wrap narrow prose">
+<h1>FormlyBite Gizlilik Politikası</h1>
+<p class="meta">Son güncelleme: 10 Ekim 2026</p>
+<p>FormlyBite, Süleyman Çayır tarafından geliştirilen bir iPhone öğün günlüğü uygulamasıdır. Gizlilik ve destek talepleri için <a href="mailto:destek@formlyapps.com">destek@formlyapps.com</a> adresine yazabilirsin.</p>
+<h2>1. Kısa özet</h2>
+<ul><li>Öğün günlüğü, kilo geçmişi, hedefler, su kayıtları ve favoriler uygulamanın yerel dosyalarında tutulur.</li><li>Fotoğraf veya yazıyla analiz başlattığında ilgili içerik Supabase üzerinden OpenAI’a gönderilir.</li><li>Apple Sağlık’tan okunan kilo ve aktif enerji bu analiz isteğine eklenmez.</li><li>Uygulama reklam göstermez, uygulamalar arası takip yapmaz ve verilerini satmaz.</li><li>Abonelik ödemelerini Apple işler; abonelik durumunu RevenueCat doğrular.</li></ul>
+<h2>2. Cihazında saklanan veriler</h2>
+<p>Kişisel plan için girdiğin yaş, boy, kilo, hedef kilo, hareket düzeyi ve diğer plan cevapları; öğünler, kalori ve makro değerleri, öğün fotoğrafları, favoriler, su kayıtları, kilo geçmişi ve ayarların cihazında saklanır. Şu anda uygulamaya ait hesapla yedekleme veya cihazlar arası eşitleme yoktur. Uygulamayı silmek yerel kayıtları kaldırır. Apple’ın cihaz yedekleri ve geri yüklemesi, Apple hesabının ve cihazının ayarlarına bağlıdır.</p>
+<p>Kamera yalnız fotoğraf çekmek veya barkod okumak için kullanılır. Fotoğraf arşivinden sistem seçicisiyle seçtiğin görsel işlenir. Kaydedilen ve analiz için gönderilen fotoğraf küçültülmüş JPEG’dir. Bildirimler öğün hatırlatmaları içindir. Maskotun hareketi için telefonun eğim bilgisi anlık kullanılır; sunucuya gönderilmez.</p>
+<h2>3. Fotoğraf ve yazılı öğün analizi</h2>
+<p>Analiz başlattığında seçtiğin öğün fotoğrafı, yazılı tarif veya düzeltme notu ve uygulama dili, kimliği doğrulanmış bir istekle Supabase sunucumuza gönderilir. Sunucu içeriği OpenAI API’ye ileterek öğün adı, kalori, makro ve öğün puanı tahmini ister. Kişisel plan bilgilerin ve Apple Sağlık kayıtların bu isteğe eklenmez. Yazdığın metne kendin eklediğin kişisel bilgi de aktarılır; analiz için gerekli olmayan özel bilgileri eklememeni öneririz.</p>
+<p>Uygulamanın sunucu veritabanı fotoğrafı, tarif metnini ve öğün tahmininin içeriğini kaydetmez. Bu, hizmet sağlayıcıların içeriği hiç tutmadığı anlamına gelmez. OpenAI API verileri varsayılan olarak model eğitimi için kullanılmaz. Mevcut analiz isteği Responses API’nin varsayılan saklama ayarını kullanır: yanıt verileri en az 30 gün saklanabilir; kötüye kullanım denetim kayıtları genel olarak 30 güne kadar, yasal veya güvenlik istisnalarında daha uzun tutulabilir. Ayrıntılar <a href="https://developers.openai.com/api/docs/guides/your-data">OpenAI veri kontrollerinde</a> açıklanır.</p>
+<p>Supabase proje bölgesi Avrupa Birliği’dir. OpenAI ve diğer hizmet sağlayıcıların işleme faaliyetleri Türkiye veya AB dışında da gerçekleşebilir. Sağlayıcıların kendi gizlilik ve saklama politikaları uygulanır.</p>
+<h2>4. Anonim oturum ve teknik kayıtlar</h2>
+<p>Uygulama kayıt ekranı olmadan rastgele bir Supabase hesap kimliği oluşturur. Bu kimlik kişisel adını içermez, ancak aynı oturumun kullanımını birbirine bağlayan bir tanımlayıcıdır. Oturum belirteçleri cihazın Keychain alanında tutulur; uygulamayı silmek Keychain kaydının da silindiği garantisini vermez.</p>
+<p>Ücretsiz analiz hakkını ve kötüye kullanımı yönetmek için analiz zamanı, hesap kimliği, kullanılan model, içerikte yiyecek bulunup bulunmadığı ve giriş/çıkış token sayısı kaydedilir. Bu kayıtlar için şu anda otomatik silme takvimi tanımlı değildir; silme talebin için bize yazabilirsin. Ağ ve hizmet sağlayıcılar güvenlik ve hizmet işletimi için IP adresi, istek zamanı ve hata kayıtları gibi teknik verileri işleyebilir.</p>
+<h2>5. Barkod sorguları</h2>
+<p>Bir barkod aradığında ürün numarası doğrudan Open Food Facts’e gönderilir. Sağlayıcı bağlantının IP adresini ve FormlyBite uygulama bilgisini de görebilir. Öğün günlüğün ve kişisel planın barkod isteğine eklenmez. Ürün verileri eksik veya hatalı olabilir. <a href="https://world.openfoodfacts.org/privacy">Open Food Facts gizlilik politikası</a> geçerlidir.</p>
+<h2>6. Apple Sağlık</h2>
+<p>İzin verirsen FormlyBite kilo ve aktif enerji verilerini okur; uygulamada girdiğin kiloyu Sağlık’a yazar. Okunan bilgiler ilerleme ve yakılan kaloriyi hedefe ekleme işlevleri için cihazda kullanılır. Sağlık verileri Supabase veya OpenAI’a gönderilmez; reklam, pazarlama veya veri satışı için kullanılmaz. İzinleri Sağlık uygulamasından kaldırabilirsin. Önceden Sağlık’a yazılan kayıtlar, FormlyBite silinse de Sağlık’ta kalabilir; bunları Sağlık uygulamasından yönetebilirsin.</p>
+<h2>7. Abonelikler</h2>
+<p>Satın alma ve ödemeler Apple üzerinden gerçekleşir; kart bilgilerini görmeyiz. RevenueCat, anonim uygulama hesap kimliğiyle satın alma, ürün, abonelik durumu ve geri yükleme bilgilerini işler. SDK ayrıca hizmetin işlemesi için uygulama/cihaz ve bağlantıya ilişkin teknik bilgileri işleyebilir. <a href="https://www.revenuecat.com/privacy/">RevenueCat gizlilik politikası</a> ve Apple’ın satın alma koşulları geçerlidir. Abonelik iptali Apple hesabındaki Abonelikler bölümünden yapılır; uygulamayı silmek aboneliği iptal etmez.</p>
+<h2>8. Seçeneklerin ve taleplerin</h2>
+<p>Fotoğraf/yazılı analiz kullanmadan elle öğün kaydı tutabilir; kamera, bildirim ve Sağlık izinlerini cihaz ayarlarından yönetebilirsin. Uygulama içinden öğünlerini düzenleyebilir veya silebilirsin. Sunucu kayıtlarına erişim, düzeltme veya silme talebi için <a href="mailto:destek@formlyapps.com">destek@formlyapps.com</a> adresine FormlyBite başlığıyla yaz. Anonim kaydın sana ait olduğunu doğrulayabilmek için gereken teknik bilgileri birlikte belirleriz; e-postana sağlık geçmişi veya öğün fotoğrafı eklemen gerekmez. Yasal saklama gereklilikleri ve sağlayıcılara ait kayıtlar ayrı değerlendirilir.</p>
+<h2>9. Sağlık bilgisi ve değişiklikler</h2>
+<p>FormlyBite’ın kalori, makro, kişisel hedef ve öğün puanı sonuçları tahmindir; tanı veya tedavi sunmaz, sağlık uzmanının önerisinin yerine geçmez. Uygulamanın veri işleme şekli değişirse bu sayfa ve son güncelleme tarihi yenilenir.</p>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<span>© 2026 Süleyman Çayır</span>
+<nav aria-label="Alt menü">
+<a href="/formlystudy/gizlilik/">FormlyStudy gizlilik</a>
+<a href="/formlystudy/destek/">FormlyStudy destek</a>
+<a href="/formlyconvert/gizlilik/">FormlyConvert gizlilik</a>
+<a href="/formlyconvert/destek/">FormlyConvert destek</a>
+<a href="/formlybite/gizlilik/">FormlyBite Gizlilik</a>
+<a href="/formlybite/destek/">FormlyBite Destek</a>
+<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Kullanım koşulları</a>
+</nav>
+</div></footer>
+</body>
+</html>

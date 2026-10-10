@@ -23,6 +23,9 @@ CONVERT_MAIL = "formlyconvert@gmail.com"
 EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 
 PATHS = {
+    "bite": {"tr": "/formlybite/", "en": "/en/formlybite/"},
+    "bite-support": {"tr": "/formlybite/destek/", "en": "/en/formlybite/support/"},
+    "bite-privacy": {"tr": "/formlybite/gizlilik/", "en": "/en/formlybite/privacy/"},
     "home": {"tr": "/", "en": "/en/"},
     "study": {"tr": "/formlystudy/", "en": "/en/formlystudy/"},
     "convert": {"tr": "/formlyconvert/", "en": "/en/formlyconvert/"},
@@ -59,7 +62,7 @@ def page(key: str, lang: str, title: str, description: str, body: str, theme: st
     ui = UI[lang]
     other = "en" if lang == "tr" else "tr"
     path = p(key, lang)
-    nav = [(p("study", lang), "FormlyStudy"), (p("convert", lang), "FormlyConvert"), (p("support", lang), ui["support"])]
+    nav = [(p("study", lang), "FormlyStudy"), (p("convert", lang), "FormlyConvert"), (p("bite", lang), "FormlyBite"), (p("support", lang), ui["support"])]
     links = "".join(
         f'<a href="{href}"{" aria-current=\"page\"" if path.startswith(href) else ""}>{label}</a>'
         for href, label in nav
@@ -97,6 +100,8 @@ def page(key: str, lang: str, title: str, description: str, body: str, theme: st
 <a href="{p("study-support", lang)}">{ui["study_support"]}</a>
 <a href="{p("convert-privacy", lang)}">{ui["convert_privacy"]}</a>
 <a href="{p("convert-support", lang)}">{ui["convert_support"]}</a>
+<a href="{p("bite-privacy", lang)}">FormlyBite {ui["privacy"]}</a>
+<a href="{p("bite-support", lang)}">FormlyBite {ui["support"]}</a>
 <a href="{EULA}">{ui["terms"]}</a>
 </nav>
 </div></footer>
@@ -120,34 +125,34 @@ def tiles(items: list[tuple[str, str, str]]) -> str:
 
 HOME = {
     "tr": {
-        "title": "Formly · FormlyConvert ve FormlyStudy",
-        "description": "FormlyConvert ve FormlyStudy: belgelerin için iki küçük iPhone ve iPad uygulaması.",
-        "h1": "Belgelerin için iki küçük yardımcı.",
-        "lead": "FormlyConvert dosyalarını dönüştürür, FormlyStudy onlardan öğrenmeni sağlar. İkisi de iPhone ve iPad için; sade, sakin ve gizliliğine saygılı.",
+        "title": "Formly · FormlyConvert, FormlyStudy ve FormlyBite",
+        "description": "Belgelerin, öğrenmen ve öğün günlüğün için Formly uygulamaları.",
+        "h1": "Gününe eşlik eden küçük yardımcılar.",
+        "lead": "FormlyConvert dosyalarını dönüştürür, FormlyStudy onlardan öğrenmeni sağlar. FormlyBite ise öğünlerini ve günlük hedeflerini takip etmene yardımcı olur.",
         "cta": "Uygulamaları gör", "anchor": "uygulamalar",
         "on_store": "App Store'da", "soon": "Yakında", "open_store": "App Store'da aç", "meet": "Tanı",
         "convert": "PDF, Word, Excel, PowerPoint, görsel ve UDF dosyalarını dönüştürür; PDF'leri sıkıştırır, doldurur ve imzalar. Yanında kâğıttan dostu Formi.",
         "study": "PDF'lerinden kaynak bağlantılı kartlar, testler, özetler ve zihin haritaları hazırlar; ne zaman tekrar edeceğini de söyler. Yanında ayraç dostu Tabi.",
         "how": "Nasıl yapıyoruz?",
         "tiles": [
-            ("1", "Önce cihazında", "Belgelerin varsayılan olarak cihazında işlenir. Buluta gönderme yalnız sen istediğinde olur."),
-            ("2", "Hesap şart değil", "İki uygulamayı da hesap açmadan kullanabilirsin. Hesap yalnız ek özellikler için."),
+            ("1", "Önce cihazında", "Belgelerin ve günlük kayıtların cihazında kalır. FormlyBite fotoğraf ve yazılı öğün analizini bulut üzerinden yapar."),
+            ("2", "Hesap şart değil", "Uygulamaları hesap açmadan kullanmaya başlayabilirsin. Veri işleme ayrıntıları her uygulamanın gizlilik sayfasında."),
             ("3", "Küçük ve odaklı", "Her uygulama tek bir işi iyi yapmaya çalışır. Gereksiz ekran, gereksiz izin yok."),
         ],
     },
     "en": {
-        "title": "Formly · FormlyConvert and FormlyStudy",
-        "description": "FormlyConvert and FormlyStudy: two small iPhone and iPad apps for your documents.",
-        "h1": "Two small helpers for your documents.",
-        "lead": "FormlyConvert converts your files, FormlyStudy helps you learn from them. Both are made for iPhone and iPad: simple, calm and respectful of your privacy.",
+        "title": "Formly · FormlyConvert, FormlyStudy and FormlyBite",
+        "description": "Formly apps for your documents, learning and food diary.",
+        "h1": "Small helpers for your day.",
+        "lead": "FormlyConvert converts your files, FormlyStudy helps you learn from them. FormlyBite helps you track meals and daily goals.",
         "cta": "See the apps", "anchor": "apps",
         "on_store": "On the App Store", "soon": "Coming soon", "open_store": "Open in the App Store", "meet": "Learn more",
         "convert": "Converts PDF, Word, Excel, PowerPoint, image and UDF files; compresses, fills in and signs PDFs. With Formi, its paper friend.",
         "study": "Turns your PDFs into source-linked cards, quizzes, summaries and mind maps, and tells you when to review. With Tabi, its bookmark friend.",
         "how": "How we build them",
         "tiles": [
-            ("1", "On your device first", "Your documents are processed on your device by default. They go to the cloud only when you ask."),
-            ("2", "No account needed", "You can use both apps without an account. An account is only for extra features."),
+            ("1", "On your device first", "Your documents and diary entries stay on your device. FormlyBite uses cloud processing for photo and written meal analysis."),
+            ("2", "No account needed", "You can start using the apps without signing up. Each app’s privacy page explains how it handles data."),
             ("3", "Small and focused", "Each app tries to do one job well. No needless screens, no needless permissions."),
         ],
     },
@@ -176,6 +181,11 @@ def home(lang: str) -> None:
 <div><span class="badge">{t["soon"]}</span><h2>FormlyStudy</h2><p>{t["study"]}</p></div>
 <img class="mascot" src="/assets/tabi.svg" alt="Tabi">
 <div class="actions"><a class="button primary" href="{p("study", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("study-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
+</article>
+<article class="app-card theme-bite">
+<div><span class="badge">{t["soon"]}</span><h2>FormlyBite</h2><p>{BITE[lang]["card"]}</p></div>
+<img class="mascot app-icon" src="/assets/formlybite.png" alt="Çilek">
+<div class="actions"><a class="button primary" href="{p("bite", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
 </article>
 </section>
 <section class="section">
@@ -325,10 +335,10 @@ def convert(lang: str) -> None:
 
 def support_hub(lang: str) -> None:
     t = {
-        "tr": ("Destek", "Destek · Formly", "FormlyConvert ve FormlyStudy için destek.", "Hangi uygulama için yardım istiyorsun?",
+        "tr": ("Destek", "Destek · Formly", "FormlyConvert, FormlyStudy ve FormlyBite için destek.", "Hangi uygulama için yardım istiyorsun?",
                "Dönüştürme, abonelik ve hesap soruları.", "FormlyConvert desteği",
                "Kartlar, tekrar, hesap ve abonelik soruları.", "FormlyStudy desteği"),
-        "en": ("Support", "Support · Formly", "Support for FormlyConvert and FormlyStudy.", "Which app do you need help with?",
+        "en": ("Support", "Support · Formly", "Support for FormlyConvert, FormlyStudy and FormlyBite.", "Which app do you need help with?",
                "Conversion, subscription and account questions.", "FormlyConvert support",
                "Cards, reviews, account and subscription questions.", "FormlyStudy support"),
     }[lang]
@@ -338,6 +348,7 @@ def support_hub(lang: str) -> None:
 <div class="apps" style="grid-template-columns:1fr;padding:0">
 <article class="app-card theme-convert"><div><h2>FormlyConvert</h2><p>{t[4]}</p></div><img class="mascot" src="/assets/formi.svg" alt=""><div class="actions"><a class="button primary" href="{p("convert-support", lang)}">{t[5]}</a></div></article>
 <article class="app-card theme-study"><div><h2>FormlyStudy</h2><p>{t[6]}</p></div><img class="mascot" src="/assets/tabi.svg" alt=""><div class="actions"><a class="button primary" href="{p("study-support", lang)}">{t[7]}</a></div></article>
+<article class="app-card theme-bite"><div><h2>FormlyBite</h2><p>{BITE[lang]["support_intro"]}</p></div><img class="mascot app-icon" src="/assets/formlybite.png" alt=""><div class="actions"><a class="button primary" href="{p("bite-support", lang)}">FormlyBite {UI[lang]["support"]}</a></div></article>
 </div>
 </div>"""
     page("support", lang, t[1], t[2], body)
@@ -496,6 +507,52 @@ def convert_privacy(lang: str) -> None:
             "How FormlyConvert handles documents and other data.", "convert", doc_lang="en", note=note)
 
 
+
+# MARK: FormlyBite
+BITE = {
+    "tr": {
+        "title": "FormlyBite · Öğün günlüğün", "soon": "FormlyBite · Yakında · iPhone",
+        "h1": "Öğünlerini tanı, gününü takip et.",
+        "card": "Fotoğraf, barkod veya yazıyla öğün ekle; kalori, makro, su ve kilo geçmişini takip et. Yanında çilek dostun Çilek.",
+        "lead": "FormlyBite, öğünlerini kaydetmene ve kişisel hedeflerini takip etmene yardımcı olur. Fotoğraf veya yazılı tariften kalori ve makro tahmini alabilir, sonuçları kendin düzenleyebilirsin.",
+        "features": "Neler yapar?", "support_intro": "Öğün analizi, günlük, Apple Sağlık ve abonelik soruları.",
+        "tiles": [("+", "Öğün ekleme", "Fotoğraf, barkod, yazılı tarif, favoriler veya elle giriş. Tahminleri incele ve düzelt."), ("○", "Günlük hedefler", "Kişisel plan, kalori ve makro takibi; su kaydı ve öğün hatırlatmaları."), ("↗", "İlerleme", "Kilo geçmişi, günlük seri ve haftalık kalori görünümü. İsteğe bağlı Apple Sağlık bağlantısı.")],
+        "notice": "Kalori, makro ve öğün puanı tahmindir; tıbbi tavsiye veya kişiye özel tedavi değildir.",
+        "faq": [("Analiz nasıl çalışır?", "Fotoğraf veya yazılı tarif, Supabase sunucumuz üzerinden OpenAI’a iletilir. Sonuç bir tahmindir; porsiyon ve makroları kontrol ederek düzenleyebilirsin."), ("Kayıtlarım başka cihazımda görünür mü?", "Şu anda öğün günlüğü, kilo geçmişi ve favoriler bu cihazda tutulur. Hesapla yedekleme ve cihazlar arası eşitleme bulunmaz. Uygulamayı silmek yerel kayıtları kaldırır."), ("Aboneliğimi nasıl yönetirim?", "iPhone’da Ayarlar › [adın] › Abonelikler üzerinden yönetebilir veya iptal edebilirsin. Uygulamadaki geri yükleme seçeneğini aynı Apple hesabıyla kullan."), ("Apple Sağlık iznini nasıl kaldırırım?", "Sağlık uygulamasındaki profilinden Uygulamalar › FormlyBite bölümüne git ve izinleri kapat. Sağlık’a önceden yazılmış kilo kayıtları ayrıca Sağlık uygulamasından yönetilir."), ("Verilerimle ilgili talepte nasıl bulunurum?", "Aşağıdaki destek adresine FormlyBite başlığıyla yaz. Anonim sunucu kayıtlarının sana ait olduğunu doğrulayabilmek için gereken teknik bilgileri birlikte belirleriz. E-postana öğün fotoğrafı veya sağlık geçmişi eklemen gerekmez.")],
+    },
+    "en": {
+        "title": "FormlyBite · Your food diary", "soon": "FormlyBite · Coming soon · iPhone",
+        "h1": "Know your meals. Follow your day.",
+        "card": "Add meals with photos, barcodes or text; track calories, macros, water and weight. With Çilek, your strawberry friend.",
+        "lead": "FormlyBite helps you record meals and follow personal goals. Get calorie and macro estimates from a photo or written description, then review and adjust the results yourself.",
+        "features": "What it does", "support_intro": "Questions about meal analysis, your diary, Apple Health and subscriptions.",
+        "tiles": [("+", "Add meals", "Photos, barcodes, written descriptions, favourites or manual entry. Review and correct estimates."), ("○", "Daily goals", "A personal plan, calorie and macro tracking, water entries and meal reminders."), ("↗", "Progress", "Weight history, daily streaks and a weekly calorie view. Optional Apple Health connection.")],
+        "notice": "Calories, macros and meal scores are estimates, not medical advice or personalised treatment.",
+        "faq": [("How does analysis work?", "A photo or written description is sent through our Supabase server to OpenAI. Results are estimates; review portions and adjust macros before relying on them."), ("Will my entries appear on another device?", "Your food diary, weight history and favourites are currently stored on this device. Account backup and cross-device sync are not available. Deleting the app removes local entries."), ("How do I manage my subscription?", "Manage or cancel it in iPhone Settings › [your name] › Subscriptions. Use Restore purchases in the app with the same Apple Account."), ("How do I revoke Apple Health access?", "In the Health app, open your profile, then Apps › FormlyBite and turn off permissions. Weight entries already written to Health are managed separately in the Health app."), ("How do I make a data request?", "Email the support address below with FormlyBite in the subject. We will work with you to identify the technical information needed to verify ownership of anonymous server records. You do not need to attach meal photos or health history.")],
+    },
+}
+
+
+def bite(lang: str) -> None:
+    t = BITE[lang]
+    body = f'''<div class="wrap">
+<section class="app-hero"><div><p class="eyebrow">{t["soon"]}</p><h1>{t["h1"]}</h1><p class="lead">{t["lead"]}</p><a class="button primary" href="{p("bite-support", lang)}">{UI[lang]["support"]}</a> <a class="button ghost" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div><img class="mascot app-icon" src="/assets/formlybite.png" alt="Çilek"></section>
+<section class="section"><h2>{t["features"]}</h2>{tiles(t["tiles"])}</section><p class="meta">{t["notice"]}</p></div>'''
+    page("bite", lang, t["title"], t["card"], body, theme="bite")
+
+
+def bite_support(lang: str) -> None:
+    t = BITE[lang]
+    title = "FormlyBite " + UI[lang]["support"]
+    body = f'''<div class="wrap narrow prose"><h1>{title}</h1><p class="meta">{t["support_intro"]}</p><p><a href="mailto:{STUDY_MAIL}?subject=FormlyBite">{STUDY_MAIL}</a></p>{faq(t["faq"])}<p><a href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a> · <a href="{EULA}">{UI[lang]["terms"]}</a></p></div>'''
+    page("bite-support", lang, title, t["support_intro"], body, theme="bite")
+
+
+def bite_privacy(lang: str) -> None:
+    privacy(ROOT / "content" / f"formlybite-privacy-{lang}.md", "bite-privacy", lang,
+            BITE[lang]["support_intro"], "bite")
+
+
 if __name__ == "__main__":
     for lang in ("tr", "en"):
         home(lang)
@@ -506,3 +563,6 @@ if __name__ == "__main__":
         convert_support(lang)
         study_privacy(lang)
         convert_privacy(lang)
+        bite(lang)
+        bite_support(lang)
+        bite_privacy(lang)
