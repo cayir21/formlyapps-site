@@ -6,7 +6,7 @@ FormlyBite is an iPhone food diary developed by Süleyman Çayır. For privacy a
 
 ## 1. Overview
 
-- Your food diary, workouts, weight history, goals, water entries and favourites are stored on your device and, if you are signed in to iCloud, backed up to your own iCloud account. Meal and progress photos stay on your device only.
+- Your food diary, meal and progress photos, workouts, weight history, goals, water entries and favourites are stored on your device and, if you are signed in to iCloud, backed up to your own iCloud account.
 - When you start photo or written analysis, the relevant content is sent through Supabase to OpenAI.
 - Weight and active energy read from Apple Health are not included in these analysis requests.
 - Anonymous usage events and crash diagnostics are collected to improve the app; you can turn this off in Settings. Meal content, photos, weight and health data are not part of these records.
@@ -18,7 +18,7 @@ FormlyBite is an iPhone food diary developed by Süleyman Çayır. For privacy a
 
 Age, height, weight, target weight, activity level and other plan answers; meals with their calories, macros, fibre, sugar, sodium and ingredient breakdown; meal photos, progress photos, workouts you enter, favourites, water entries, weight history and settings are stored on your device.
 
-If your device is signed in to iCloud, these records, except photos, are backed up to your own iCloud account through Apple’s iCloud key-value store and synced between devices using the same Apple Account. The backup is held by Apple; we cannot access it. Meal and progress photos are not backed up and stay only on the device where they were added. If you are not signed in to iCloud, the data stays on your device only. Deleting the app removes local entries but not the iCloud backup; to remove the backup too, use “Delete my data” in the app first. Apple device backups and restoration depend on your Apple Account and device settings.
+If your device is signed in to iCloud, these records are backed up to your own iCloud account through Apple’s iCloud key-value store, and meal and progress photos through the app’s file storage in iCloud, and synced between devices using the same Apple Account. The backup is held by Apple; we cannot access it. Photos count towards your iCloud storage. When you delete a meal or a progress photo, its iCloud copy is deleted too. If you are not signed in to iCloud, the data stays on your device only. Deleting the app removes local entries but not the iCloud backup; to remove the backup too, use “Delete my data” in the app first. Apple device backups and restoration depend on your Apple Account and device settings.
 
 For the Home Screen and Lock Screen widgets, the day’s calorie and macro summary is shared between the app and its widget on your device; it is not sent to our server.
 

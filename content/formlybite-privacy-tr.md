@@ -6,7 +6,7 @@ FormlyBite, Süleyman Çayır tarafından geliştirilen bir iPhone öğün günl
 
 ## 1. Kısa özet
 
-- Öğün günlüğü, egzersizler, kilo geçmişi, hedefler, su kayıtları ve favoriler cihazında tutulur; iCloud’a giriş yaptıysan kendi iCloud hesabına yedeklenir. Öğün ve ilerleme fotoğrafları yalnız cihazında kalır.
+- Öğün günlüğü, öğün ve ilerleme fotoğrafları, egzersizler, kilo geçmişi, hedefler, su kayıtları ve favoriler cihazında tutulur; iCloud’a giriş yaptıysan kendi iCloud hesabına yedeklenir.
 - Fotoğraf veya yazıyla analiz başlattığında ilgili içerik Supabase üzerinden OpenAI’a gönderilir.
 - Apple Sağlık’tan okunan kilo ve aktif enerji bu analiz isteğine eklenmez.
 - Uygulamayı geliştirmek için anonim kullanım olayları ve çökme tanıları toplanır; Ayarlar’dan kapatabilirsin. Öğün içeriği, fotoğraf, kilo ve sağlık verisi bu kayıtlara girmez.
@@ -18,7 +18,7 @@ FormlyBite, Süleyman Çayır tarafından geliştirilen bir iPhone öğün günl
 
 Kişisel plan için girdiğin yaş, boy, kilo, hedef kilo, hareket düzeyi ve diğer plan cevapları; öğünler, bunların kalori, makro, lif, şeker, sodyum değerleri ve malzeme dökümü; öğün fotoğrafları, ilerleme fotoğrafları, elle girdiğin egzersizler, favoriler, su kayıtları, kilo geçmişi ve ayarların cihazında saklanır.
 
-Cihazında iCloud’a giriş yapılmışsa bu kayıtlar, fotoğraflar hariç, Apple’ın iCloud anahtar-değer deposu üzerinden kendi iCloud hesabına yedeklenir ve aynı Apple hesabını kullanan cihazların arasında eşitlenir. Bu yedek Apple tarafından saklanır; biz erişemeyiz. Öğün ve ilerleme fotoğrafları yedeklenmez ve yalnız eklendikleri cihazda durur. iCloud’a giriş yapılmamışsa veriler yalnız cihazda kalır. Uygulamayı silmek yerel kayıtları kaldırır, iCloud’daki yedeği kaldırmaz; yedeği de silmek için önce uygulamadaki “Verilerimi sil” seçeneğini kullan. Apple’ın cihaz yedekleri ve geri yüklemesi, Apple hesabının ve cihazının ayarlarına bağlıdır.
+Cihazında iCloud’a giriş yapılmışsa bu kayıtlar Apple’ın iCloud anahtar-değer deposu üzerinden, öğün ve ilerleme fotoğrafları ise uygulamanın iCloud’daki dosya alanı üzerinden kendi iCloud hesabına yedeklenir ve aynı Apple hesabını kullanan cihazların arasında eşitlenir. Bu yedek Apple tarafından saklanır; biz erişemeyiz. Fotoğraflar iCloud saklama alanından yer kullanır. Bir öğünü veya ilerleme fotoğrafını sildiğinde iCloud’daki kopyası da silinir. iCloud’a giriş yapılmamışsa veriler yalnız cihazda kalır. Uygulamayı silmek yerel kayıtları kaldırır, iCloud’daki yedeği kaldırmaz; yedeği de silmek için önce uygulamadaki “Verilerimi sil” seçeneğini kullan. Apple’ın cihaz yedekleri ve geri yüklemesi, Apple hesabının ve cihazının ayarlarına bağlıdır.
 
 Ana ekran ve kilit ekranı araç takımları için günün kalori ve makro özeti, uygulama ile araç takımı arasında cihaz üzerinde paylaşılır; sunucuya gönderilmez.
 
