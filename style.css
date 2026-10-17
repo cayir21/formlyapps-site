@@ -270,3 +270,27 @@ tr:last-child td { border-bottom: 0; }
   .site-header nav::-webkit-scrollbar { display: none; }
   .site-header nav a { white-space: nowrap; }
 }
+
+/* FormlyBite ürün sayfası: Muzi'nin sarısı ve mürekkep siyahı (App Store görselleriyle aynı dil). */
+.bite-hero { --muz: #F7D048; background:
+  radial-gradient(circle, rgb(198 138 28 / .28) 1.6px, transparent 2px) 0 0 / 22px 22px,
+  linear-gradient(#F9D95A, #F2C53A); color: #1F1A12; border-bottom: 0; }
+.bite-hero h1 { font-family: var(--sans); font-weight: 800; letter-spacing: -0.035em; max-width: 12ch; }
+.bite-hero .lead, .bite-hero .store-meta { color: #4A3E1E; }
+.bite-hero .store { background: #1F1A12; color: #FFF6E0; }
+.bite-hero .button.ghost { border-color: rgb(31 26 18 / .35); color: #1F1A12; }
+.pc-muzi { position: absolute; z-index: 3; width: 96px; left: -4%; bottom: 70px; rotate: -6deg; filter: drop-shadow(0 14px 16px rgb(60 40 0 / .25)); }
+.theme-bite .pc-shot::before { background: #FBEDB4; }
+.theme-bite .pc-row h2, .theme-bite .pc-privacy h2, .theme-bite .pc-final h2, .theme-bite .faq-list h2 { font-family: var(--sans); font-weight: 800; letter-spacing: -0.03em; }
+.theme-bite .facts strong { font-family: var(--sans); font-weight: 800; letter-spacing: -0.03em; font-size: clamp(22px, 2.6vw, 28px); }
+.theme-bite .pc-final { background: #F7D048; color: #1F1A12; }
+.theme-bite .pc-final p { color: #4A3E1E; }
+.theme-bite .pc-final .store { background: #1F1A12; color: #FFF6E0; }
+.theme-bite .pc-final img { width: 90px; rotate: 0deg; }
+.theme-bite .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%23B72B45' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.notice { color: var(--ink-soft); font-size: 14px; border-top: 1px solid var(--line); padding-top: 20px; margin: 0; }
+@media (prefers-color-scheme: dark) {
+  .theme-bite .pc-shot::before { background: #3A3216; }
+  .theme-bite .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%23FF97A9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+}
+@media (max-width: 900px) { .pc-muzi { width: 76px; bottom: 50px; left: -2%; } }

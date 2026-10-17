@@ -275,7 +275,6 @@ CONVERT = {
         "description": "FormlyConvert: PDF, Word, Excel, PowerPoint, görsel ve UYAP UDF dosyalarını iPhone ve iPad'de dönüştür, sıkıştır, doldur ve imzala. 39 belge aracı, dönüşümler cihazında.",
         "h1": "Belge işlerinin hepsi, tek uygulamada.",
         "lead": "PDF, Word, Excel, PowerPoint, görsel ve UYAP UDF dosyalarını dönüştür; PDF'leri sıkıştır, doldur ve imzala. Dönüşümler iPhone ya da iPad'inde yapılır; dosyaların bunun için bir sunucuya yüklenmez.",
-        "store": ("App Store'dan", "İndir"),
         "store_meta": "Ücretsiz · iPhone ve iPad · iOS 17 ve sonrası",
         "facts": [("39", "belge aracı"), ("10+", "dosya biçimi"), ("Cihazda", "yapılan dönüşümler"), ("iOS 17+", "iPhone ve iPad")],
         "formats_label": "Desteklenen biçimler",
@@ -325,7 +324,6 @@ CONVERT = {
         "description": "FormlyConvert: convert, compress, fill in and sign PDF, Word, Excel, PowerPoint, image and UDF files on iPhone and iPad. 39 document tools, conversions on your device.",
         "h1": "Every document task, in one app.",
         "lead": "Convert PDF, Word, Excel, PowerPoint, image and UDF files; compress, fill in and sign PDFs. Conversions happen on your iPhone or iPad; your files aren't uploaded to a server for it.",
-        "store": ("Download on the", "App Store"),
         "store_meta": "Free · iPhone and iPad · iOS 17 or later",
         "facts": [("39", "document tools"), ("10+", "file formats"), ("On device", "conversions"), ("iOS 17+", "iPhone and iPad")],
         "formats_label": "Supported formats",
@@ -375,15 +373,20 @@ CONVERT = {
 APPLE = '<svg aria-hidden="true" viewBox="0 0 384 512" width="20" height="24"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>'
 
 
-def store_button(lang: str) -> str:
-    small, big = CONVERT[lang]["store"]
-    return f'<a class="store" href="{CONVERT_STORE}">{APPLE}<span><small>{small}</small>{big}</span></a>'
+STORE_LABEL = {"tr": ("App Store'dan", "İndir"), "en": ("Download on the", "App Store")}
 
 
-def phone(name: str, lang: str, eager: bool = False) -> str:
-    alt = f'{CONVERT[lang]["shot_alt"]} {name}'
+def store_button(lang: str, url: str = CONVERT_STORE) -> str:
+    small, big = STORE_LABEL[lang]
+    return f'<a class="store" href="{url}">{APPLE}<span><small>{small}</small>{big}</span></a>'
+
+
+def phone(name: str, lang: str, eager: bool = False, app: str = "convert", alt: str = "") -> str:
+    """App Store setinden kesilmiş ekran; assets/<app>/<name>-<lang>.jpg, 600 px genişlik."""
+    height = {"convert": 1329, "bite": 1305}[app]
+    alt = alt or f'{CONVERT[lang]["shot_alt"]} {name}'
     loading = "" if eager else ' loading="lazy"'
-    return f'<div class="phone"><img src="/assets/convert/{name}-{lang}.jpg" width="600" height="1329" alt="{alt}"{loading} decoding="async"></div>'
+    return f'<div class="phone"><img src="/assets/{app}/{name}-{lang}.jpg" width="600" height="{height}" alt="{alt}"{loading} decoding="async"></div>'
 
 
 def convert(lang: str) -> None:
@@ -627,36 +630,153 @@ def convert_privacy(lang: str) -> None:
 
 
 # MARK: FormlyBite
+# Ekranlar Figma'daki "App Store görselleri — tr/en" setinden (dosya 11GhXA67qZGXQiutt8PQiC, "Ekran" katmanları).
 BITE = {
     "tr": {
-        "title": "FormlyBite · Öğün günlüğün", "soon": "FormlyBite · App Store'da · iPhone",
-        "h1": "Öğünlerini tanı, gününü takip et.",
+        "title": "FormlyBite · Fotoğrafla kalori ve makro takibi",
+        "description": "FormlyBite: öğününün fotoğrafını çek, kalori ve makroları Muzi hesaplasın. Barkod, yazı veya elle ekle; su, kilo ve ilerlemeni takip et.",
         "card": "Fotoğraf, barkod veya yazıyla öğün ekle; kalori, makro, su ve kilo geçmişini takip et. Yanında muz dostun Muzi.",
-        "lead": "FormlyBite, öğünlerini kaydetmene ve kişisel hedeflerini takip etmene yardımcı olur. Fotoğraf veya yazılı tariften kalori ve makro tahmini alabilir, sonuçları kendin düzenleyebilirsin.",
-        "features": "Neler yapar?", "support_intro": "Öğün analizi, günlük, Apple Sağlık ve abonelik soruları.",
-        "tiles": [("+", "Öğün ekleme", "Fotoğraf, barkod, yazılı tarif, favoriler veya elle giriş. Tahminleri incele ve düzelt."), ("○", "Günlük hedefler", "Kişisel plan, kalori ve makro takibi; su kaydı ve öğün hatırlatmaları."), ("↗", "İlerleme", "Kilo geçmişi, günlük seri ve haftalık kalori görünümü. İsteğe bağlı Apple Sağlık bağlantısı.")],
-        "notice": "Kalori, makro ve öğün puanı tahmindir; tıbbi tavsiye veya kişiye özel tedavi değildir.",
-        "faq": [("Analiz nasıl çalışır?", "Fotoğraf veya yazılı tarif, Supabase sunucumuz üzerinden OpenAI’a iletilir. Sonuç bir tahmindir; porsiyon ve makroları kontrol ederek düzenleyebilirsin."), ("Kayıtlarım başka cihazımda görünür mü?", "Şu anda öğün günlüğü, kilo geçmişi ve favoriler bu cihazda tutulur. Hesapla yedekleme ve cihazlar arası eşitleme bulunmaz. Uygulamayı silmek yerel kayıtları kaldırır."), ("Aboneliğimi nasıl yönetirim?", "iPhone’da Ayarlar › [adın] › Abonelikler üzerinden yönetebilir veya iptal edebilirsin. Uygulamadaki geri yükleme seçeneğini aynı Apple hesabıyla kullan."), ("Apple Sağlık iznini nasıl kaldırırım?", "Sağlık uygulamasındaki profilinden Uygulamalar › FormlyBite bölümüne git ve izinleri kapat. Sağlık’a önceden yazılmış kilo kayıtları ayrıca Sağlık uygulamasından yönetilir."), ("Verilerimle ilgili talepte nasıl bulunurum?", "Aşağıdaki destek adresine FormlyBite başlığıyla yaz. Anonim sunucu kayıtlarının sana ait olduğunu doğrulayabilmek için gereken teknik bilgileri birlikte belirleriz. E-postana öğün fotoğrafı veya sağlık geçmişi eklemen gerekmez.")],
+        "h1": "Fotoğrafını çek, gerisini Muzi hesaplasın.",
+        "lead": "FormlyBite öğünlerini kaydetmeni ve kişisel hedeflerini takip etmeni kolaylaştırır. Fotoğraftan ya da yazdığın tariften kalori ve makro tahmini al, sonucu kendin düzenle.",
+        "store_meta": "Ücretsiz · iPhone · iOS 17 ve sonrası",
+        "facts": [("Fotoğraf", "barkod, yazı ya da elle"), ("Makrolar", "protein, karbonhidrat, yağ"), ("Su ve kilo", "günlük kayıt ve geçmiş"), ("Apple Sağlık", "isteğe bağlı bağlantı")],
+        "rows": [
+            ("meal", "Öğün analizi", "Bir fotoğraf, birkaç saniye.",
+             "Tabağının fotoğrafını çek; Muzi yemeği tanır, malzemeleri ayırır, kalori ve makroları tahmin eder.",
+             ["Malzeme dökümüyle kalori, protein, karbonhidrat ve yağ", "Porsiyonu ve malzemeleri kendin düzelt", "Kahvaltı, öğle, akşam ya da ara öğün olarak kaydet", "Sık yediklerini favorilere ekle"]),
+            ("today", "Bugün", "Günün bir bakışta.",
+             "Kalan kalorin, makro halkaların ve su kaydın tek ekranda. Geçmiş günlere üstteki takvimden dön.",
+             ["Kişisel kalori ve makro hedefi", "Lif, şeker ve sodyum takibi", "Su kaydı tek dokunuşla", "İstersen hareketle yaktığın kaloriyi bütçene kat"]),
+            ("add", "Ekle", "Nasıl istersen öyle ekle.",
+             "Fotoğraf her zaman elinde olmayabilir. FormlyBite öğün eklemenin her yolunu bir arada sunar.",
+             ["Fotoğraf çek ya da arşivden seç", "Paketli ürünlerde barkod okut, yemek ara", "Yediğini yazarak tarif et ya da elle gir", "Egzersizlerini de kaydet"]),
+            ("widgets", "Widget'lar", "Muzi ana ekranında.",
+             "Uygulamayı açmadan günün özetini gör; su widget'ından tek dokunuşla bardak ekle.",
+             ["Kalan kalori ve makro özeti", "Su takibi widget'ı", "Öğün hatırlatmaları", "Günlük seriyle alışkanlık kur"]),
+            ("progress", "İlerleme", "Değişimi gör.",
+             "Kilonu kaydet, hedefine ne kadar yaklaştığını grafikte izle.",
+             ["Kilo geçmişi ve hedef çizgisi", "Günlük seri ve vücut kitle indeksi", "Son 7 günün kalori ortalaması", "Kiloyu Apple Sağlık'tan oku ya da oraya yaz"]),
+        ],
+        "privacy_eyebrow": "Gizlilik",
+        "privacy_h": "Günlüğün sende kalır.",
+        "privacy_lead": "Öğünlerin, fotoğrafların ve kilo geçmişin cihazında tutulur; iCloud'a giriş yaptıysan kendi iCloud hesabına yedeklenir.",
+        "privacy_points": [("Kayıt ekranı yok", "Hesap açmadan başlarsın; ad, e-posta ya da telefon istenmez."), ("Analizde yalnız gereken", "Analiz için sadece seçtiğin fotoğraf ya da tarif gönderilir; kişisel planın ve Apple Sağlık verin eklenmez."), ("Reklam yok", "Reklam göstermez, uygulamalar arası takip yapmaz, verini satmaz.")],
+        "privacy_link": "Gizlilik politikasını oku",
+        "faq_h": "Sık sorulanlar",
+        "faq": [
+            ("FormlyBite ücretsiz mi?", "İndirmek ve kullanmak ücretsiz; ücretsiz kullanımda günlük yapay zekâ analizi sınırlıdır. FormlyBite Pro ile fotoğraf ve yazıyla sınırsız analiz yaparsın. Aylık ve yıllık seçenekler uygulamada gösterilir."),
+            ("Analiz nasıl çalışır?", "Fotoğraf veya yazılı tarif, Supabase sunucumuz üzerinden OpenAI’a iletilir. Sonuç bir tahmindir; porsiyon ve makroları kontrol ederek düzenleyebilirsin."),
+            ("Kayıtlarım başka cihazımda görünür mü?", "iCloud’a giriş yaptıysan öğün günlüğün, fotoğrafların ve kilo geçmişin kendi iCloud hesabına yedeklenir ve aynı Apple hesabını kullanan cihazlarında görünür."),
+            ("Aboneliğimi nasıl yönetirim?", "iPhone’da Ayarlar › [adın] › Abonelikler üzerinden yönetebilir veya iptal edebilirsin. Uygulamadaki geri yükleme seçeneğini aynı Apple hesabıyla kullan."),
+            ("Apple Sağlık iznini nasıl kaldırırım?", "Sağlık uygulamasındaki profilinden Uygulamalar › FormlyBite bölümüne git ve izinleri kapat. Sağlık’a önceden yazılmış kilo kayıtları ayrıca Sağlık uygulamasından yönetilir."),
+            ("Verilerimi nasıl silerim?", "Uygulamada Ayarlar’daki “Verilerimi sil” cihazdaki kayıtları, iCloud yedeğini ve sunucudaki anonim hesabı siler. Başka bir talebin için destek adresine FormlyBite başlığıyla yaz."),
+        ],
+        "notice": "Kalori, makro ve öğün puanı tahmindir; malzemeye ve porsiyona göre değişebilir. FormlyBite tıbbi tavsiyenin ya da diyetisyen desteğinin yerini tutmaz.",
+        "cta_h": "Merhaba, ben Muzi.",
+        "cta_p": "Biraz kayıtsız görünürüm ama hesabı hiç kaçırmam. Önce sana uygun bir plan çıkaralım, sonra tabağını göster.",
+        "support_intro": "Öğün analizi, günlük, Apple Sağlık ve abonelik soruları.",
+        "shot_alt": "FormlyBite ekranı:",
     },
     "en": {
-        "title": "FormlyBite · Your food diary", "soon": "FormlyBite · On the App Store · iPhone",
-        "h1": "Know your meals. Follow your day.",
+        "title": "FormlyBite · Calorie and macro tracking from a photo",
+        "description": "FormlyBite: snap a photo of your meal and let Muzi estimate calories and macros. Add by barcode, text or by hand; track water, weight and progress.",
         "card": "Add meals with photos, barcodes or text; track calories, macros, water and weight. With Muzi, your banana friend.",
-        "lead": "FormlyBite helps you record meals and follow personal goals. Get calorie and macro estimates from a photo or written description, then review and adjust the results yourself.",
-        "features": "What it does", "support_intro": "Questions about meal analysis, your diary, Apple Health and subscriptions.",
-        "tiles": [("+", "Add meals", "Photos, barcodes, written descriptions, favourites or manual entry. Review and correct estimates."), ("○", "Daily goals", "A personal plan, calorie and macro tracking, water entries and meal reminders."), ("↗", "Progress", "Weight history, daily streaks and a weekly calorie view. Optional Apple Health connection.")],
-        "notice": "Calories, macros and meal scores are estimates, not medical advice or personalised treatment.",
-        "faq": [("How does analysis work?", "A photo or written description is sent through our Supabase server to OpenAI. Results are estimates; review portions and adjust macros before relying on them."), ("Will my entries appear on another device?", "Your food diary, weight history and favourites are currently stored on this device. Account backup and cross-device sync are not available. Deleting the app removes local entries."), ("How do I manage my subscription?", "Manage or cancel it in iPhone Settings › [your name] › Subscriptions. Use Restore purchases in the app with the same Apple Account."), ("How do I revoke Apple Health access?", "In the Health app, open your profile, then Apps › FormlyBite and turn off permissions. Weight entries already written to Health are managed separately in the Health app."), ("How do I make a data request?", "Email the support address below with FormlyBite in the subject. We will work with you to identify the technical information needed to verify ownership of anonymous server records. You do not need to attach meal photos or health history.")],
+        "h1": "Snap a photo. Muzi does the maths.",
+        "lead": "FormlyBite makes it easy to log meals and follow your personal goals. Get calorie and macro estimates from a photo or a written description, then adjust the result yourself.",
+        "store_meta": "Free · iPhone · iOS 17 or later",
+        "facts": [("Photo", "barcode, text or by hand"), ("Macros", "protein, carbs, fat"), ("Water and weight", "daily entries and history"), ("Apple Health", "optional connection")],
+        "rows": [
+            ("meal", "Meal analysis", "One photo, a few seconds.",
+             "Take a photo of your plate; Muzi recognizes the dish, breaks down the ingredients and estimates calories and macros.",
+             ["Calories, protein, carbs and fat with an ingredient breakdown", "Adjust portions and ingredients yourself", "Log it as breakfast, lunch, dinner or a snack", "Save the meals you eat often as favourites"]),
+            ("today", "Today", "Your day at a glance.",
+             "Calories left, macro rings and water on one screen. Jump back to past days from the calendar at the top.",
+             ["Personal calorie and macro goals", "Fibre, sugar and sodium tracking", "Log water in one tap", "Optionally add calories burned through activity to your budget"]),
+            ("add", "Add", "Log it your way.",
+             "You won't always have a photo. FormlyBite puts every way to add a meal in one place.",
+             ["Take a photo or pick one from your library", "Scan packaged food barcodes or search for foods", "Describe your meal in words or enter it by hand", "Log your exercise too"]),
+            ("widgets", "Widgets", "Muzi on your Home Screen.",
+             "See your day without opening the app, and add a glass of water straight from the widget.",
+             ["Calories left and macro summary", "Water tracking widget", "Meal reminders", "Build a habit with daily streaks"]),
+            ("progress", "Progress", "See the change.",
+             "Log your weight and watch how close you are to your goal on the chart.",
+             ["Weight history with your goal line", "Daily streak and BMI", "Average calories over the last 7 days", "Read weight from Apple Health or save it there"]),
+        ],
+        "privacy_eyebrow": "Privacy",
+        "privacy_h": "Your diary stays with you.",
+        "privacy_lead": "Your meals, photos and weight history are kept on your device and, if you're signed in to iCloud, backed up to your own iCloud account.",
+        "privacy_points": [("No sign-up screen", "Start without an account; no name, email or phone number needed."), ("Only what's needed", "Analysis sends just the photo or description you chose; your personal plan and Apple Health data aren't included."), ("No ads", "No ads, no cross-app tracking, and your data is never sold.")],
+        "privacy_link": "Read the privacy policy",
+        "faq_h": "Frequently asked questions",
+        "faq": [
+            ("Is FormlyBite free?", "It's free to download and use; free use includes a daily limit on AI meal analyses. FormlyBite Pro unlocks unlimited photo and text analysis. Monthly and annual options are shown in the app."),
+            ("How does analysis work?", "A photo or written description is sent through our Supabase server to OpenAI. Results are estimates; review portions and adjust macros before relying on them."),
+            ("Will my entries appear on another device?", "If you're signed in to iCloud, your food diary, photos and weight history are backed up to your own iCloud account and show up on devices using the same Apple Account."),
+            ("How do I manage my subscription?", "Manage or cancel it in iPhone Settings › [your name] › Subscriptions. Use Restore purchases in the app with the same Apple Account."),
+            ("How do I revoke Apple Health access?", "In the Health app, open your profile, then Apps › FormlyBite and turn off permissions. Weight entries already written to Health are managed separately in the Health app."),
+            ("How do I delete my data?", "In the app, “Delete my data” in Settings removes the entries on your device, your iCloud backup and the anonymous account on our server. For any other request, email support with FormlyBite in the subject."),
+        ],
+        "notice": "Calories, macros and meal scores are estimates and may vary with ingredients and portion sizes. FormlyBite does not replace medical advice or guidance from a qualified dietitian.",
+        "cta_h": "Hi, I’m Muzi.",
+        "cta_p": "I may look unimpressed, but I never lose count. Let’s build a plan that fits you first, then show me your plate.",
+        "support_intro": "Questions about meal analysis, your diary, Apple Health and subscriptions.",
+        "shot_alt": "FormlyBite screen:",
     },
 }
 
 
 def bite(lang: str) -> None:
     t = BITE[lang]
-    body = f'''<div class="wrap">
-<section class="app-hero"><div><p class="eyebrow">{t["soon"]}</p><h1>{t["h1"]}</h1><p class="lead">{t["lead"]}</p><a class="button primary" href="{BITE_STORE}">{HOME[lang]["open_store"]}</a> <a class="button ghost" href="{p("bite-support", lang)}">{UI[lang]["support"]}</a> <a class="button ghost" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div><img class="mascot" src="/assets/muzi.svg" alt="Muzi"></section>
-<section class="section"><h2>{t["features"]}</h2>{tiles(t["tiles"])}</section><p class="meta">{t["notice"]}</p></div>'''
-    page("bite", lang, t["title"], t["card"], body, theme="bite")
+    shot = lambda name, eager=False: phone(name, lang, eager, app="bite", alt=f'{t["shot_alt"]} {name}')
+    facts = "".join(f"<li><strong>{n}</strong><span>{label}</span></li>" for n, label in t["facts"])
+    rows = "".join(
+        f'''<section class="pc-row">
+<div class="pc-copy"><p class="eyebrow">{kicker}</p><h2>{h}</h2><p class="lead">{text}</p>
+<ul class="checks">{"".join(f"<li>{b}</li>" for b in bullets)}</ul></div>
+<div class="pc-shot">{shot(name)}</div>
+</section>'''
+        for name, kicker, h, text, bullets in t["rows"]
+    )
+    points = "".join(f"<li><strong>{h}</strong><span>{p_}</span></li>" for h, p_ in t["privacy_points"])
+    faqs = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in t["faq"])
+    body = f"""<section class="pc-hero bite-hero"><div class="wrap">
+<div class="pc-intro">
+<p class="app-id"><img src="/assets/bite/icon.png" width="44" height="44" alt=""><span>FormlyBite</span></p>
+<h1>{t["h1"]}</h1>
+<p class="lead">{t["lead"]}</p>
+<div class="pc-cta">{store_button(lang, BITE_STORE)}<a class="button ghost" href="{p("bite-support", lang)}">{UI[lang]["support"]}</a></div>
+<p class="store-meta">{t["store_meta"]}</p>
+</div>
+<div class="pc-stage">
+<div class="back">{shot("today", True)}</div>
+<div class="front">{shot("meal", True)}</div>
+<img class="pc-muzi" src="/assets/muzi.svg" alt="">
+</div>
+</div></section>
+<div class="wrap">
+<ul class="facts">{facts}</ul>
+{rows}
+<p class="notice">{t["notice"]}</p>
+</div>
+<section class="pc-privacy"><div class="wrap">
+<div class="pc-copy"><p class="eyebrow">{t["privacy_eyebrow"]}</p><h2>{t["privacy_h"]}</h2><p class="lead">{t["privacy_lead"]}</p>
+<ul class="points">{points}</ul>
+<a class="more" href="{p("bite-privacy", lang)}">{t["privacy_link"]} →</a></div>
+<div class="pc-shot">{shot("hello")}</div>
+</div></section>
+<div class="wrap">
+<section class="section faq-list narrow">
+<h2>{t["faq_h"]}</h2>
+{faqs}
+</section>
+<section class="pc-final">
+<img src="/assets/muzi-happy.svg" alt="Muzi" width="90" height="176">
+<h2>{t["cta_h"]}</h2>
+<p>{t["cta_p"]}</p>
+{store_button(lang, BITE_STORE)}
+</section>
+</div>"""
+    page("bite", lang, t["title"], t["description"], body, theme="bite")
 
 
 def bite_support(lang: str) -> None:
