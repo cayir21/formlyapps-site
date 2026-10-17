@@ -18,6 +18,7 @@ STUDY_REPO = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT.parent / "İOS" / 
 SITE = "https://formlyapps.com"
 
 CONVERT_STORE = "https://apps.apple.com/app/id6759096094"
+BITE_STORE = "https://apps.apple.com/app/id6821417196"
 STUDY_MAIL = "destek@formlyapps.com"
 CONVERT_MAIL = "formlyconvert@gmail.com"
 EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
@@ -188,9 +189,9 @@ def home(lang: str) -> None:
 <div class="actions"><a class="button primary" href="{p("study", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("study-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
 </article>
 <article class="app-card theme-bite">
-<div><span class="badge">{t["soon"]}</span><h2>FormlyBite</h2><p>{BITE[lang]["card"]}</p></div>
-<img class="mascot app-icon" src="/assets/formlybite.png" alt="Çilek">
-<div class="actions"><a class="button primary" href="{p("bite", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
+<div><span class="badge">{t["on_store"]}</span><h2>FormlyBite</h2><p>{BITE[lang]["card"]}</p></div>
+<img class="mascot" src="/assets/muzi.svg" alt="Muzi">
+<div class="actions"><a class="button primary" href="{BITE_STORE}">{t["open_store"]}</a><a class="button secondary" href="{p("bite", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
 </article>
 </section>
 <section class="section">
@@ -465,7 +466,7 @@ def support_hub(lang: str) -> None:
 <div class="apps" style="grid-template-columns:1fr;padding:0">
 <article class="app-card theme-convert"><div><h2>FormlyConvert</h2><p>{t[4]}</p></div><img class="mascot" src="/assets/formi.svg" alt=""><div class="actions"><a class="button primary" href="{p("convert-support", lang)}">{t[5]}</a></div></article>
 <article class="app-card theme-study"><div><h2>FormlyStudy</h2><p>{t[6]}</p></div><img class="mascot" src="/assets/tabi.svg" alt=""><div class="actions"><a class="button primary" href="{p("study-support", lang)}">{t[7]}</a></div></article>
-<article class="app-card theme-bite"><div><h2>FormlyBite</h2><p>{BITE[lang]["support_intro"]}</p></div><img class="mascot app-icon" src="/assets/formlybite.png" alt=""><div class="actions"><a class="button primary" href="{p("bite-support", lang)}">FormlyBite {UI[lang]["support"]}</a></div></article>
+<article class="app-card theme-bite"><div><h2>FormlyBite</h2><p>{BITE[lang]["support_intro"]}</p></div><img class="mascot" src="/assets/muzi.svg" alt=""><div class="actions"><a class="button primary" href="{p("bite-support", lang)}">FormlyBite {UI[lang]["support"]}</a></div></article>
 </div>
 </div>"""
     page("support", lang, t[1], t[2], body)
@@ -628,9 +629,9 @@ def convert_privacy(lang: str) -> None:
 # MARK: FormlyBite
 BITE = {
     "tr": {
-        "title": "FormlyBite · Öğün günlüğün", "soon": "FormlyBite · Yakında · iPhone",
+        "title": "FormlyBite · Öğün günlüğün", "soon": "FormlyBite · App Store'da · iPhone",
         "h1": "Öğünlerini tanı, gününü takip et.",
-        "card": "Fotoğraf, barkod veya yazıyla öğün ekle; kalori, makro, su ve kilo geçmişini takip et. Yanında çilek dostun Çilek.",
+        "card": "Fotoğraf, barkod veya yazıyla öğün ekle; kalori, makro, su ve kilo geçmişini takip et. Yanında muz dostun Muzi.",
         "lead": "FormlyBite, öğünlerini kaydetmene ve kişisel hedeflerini takip etmene yardımcı olur. Fotoğraf veya yazılı tariften kalori ve makro tahmini alabilir, sonuçları kendin düzenleyebilirsin.",
         "features": "Neler yapar?", "support_intro": "Öğün analizi, günlük, Apple Sağlık ve abonelik soruları.",
         "tiles": [("+", "Öğün ekleme", "Fotoğraf, barkod, yazılı tarif, favoriler veya elle giriş. Tahminleri incele ve düzelt."), ("○", "Günlük hedefler", "Kişisel plan, kalori ve makro takibi; su kaydı ve öğün hatırlatmaları."), ("↗", "İlerleme", "Kilo geçmişi, günlük seri ve haftalık kalori görünümü. İsteğe bağlı Apple Sağlık bağlantısı.")],
@@ -638,9 +639,9 @@ BITE = {
         "faq": [("Analiz nasıl çalışır?", "Fotoğraf veya yazılı tarif, Supabase sunucumuz üzerinden OpenAI’a iletilir. Sonuç bir tahmindir; porsiyon ve makroları kontrol ederek düzenleyebilirsin."), ("Kayıtlarım başka cihazımda görünür mü?", "Şu anda öğün günlüğü, kilo geçmişi ve favoriler bu cihazda tutulur. Hesapla yedekleme ve cihazlar arası eşitleme bulunmaz. Uygulamayı silmek yerel kayıtları kaldırır."), ("Aboneliğimi nasıl yönetirim?", "iPhone’da Ayarlar › [adın] › Abonelikler üzerinden yönetebilir veya iptal edebilirsin. Uygulamadaki geri yükleme seçeneğini aynı Apple hesabıyla kullan."), ("Apple Sağlık iznini nasıl kaldırırım?", "Sağlık uygulamasındaki profilinden Uygulamalar › FormlyBite bölümüne git ve izinleri kapat. Sağlık’a önceden yazılmış kilo kayıtları ayrıca Sağlık uygulamasından yönetilir."), ("Verilerimle ilgili talepte nasıl bulunurum?", "Aşağıdaki destek adresine FormlyBite başlığıyla yaz. Anonim sunucu kayıtlarının sana ait olduğunu doğrulayabilmek için gereken teknik bilgileri birlikte belirleriz. E-postana öğün fotoğrafı veya sağlık geçmişi eklemen gerekmez.")],
     },
     "en": {
-        "title": "FormlyBite · Your food diary", "soon": "FormlyBite · Coming soon · iPhone",
+        "title": "FormlyBite · Your food diary", "soon": "FormlyBite · On the App Store · iPhone",
         "h1": "Know your meals. Follow your day.",
-        "card": "Add meals with photos, barcodes or text; track calories, macros, water and weight. With Çilek, your strawberry friend.",
+        "card": "Add meals with photos, barcodes or text; track calories, macros, water and weight. With Muzi, your banana friend.",
         "lead": "FormlyBite helps you record meals and follow personal goals. Get calorie and macro estimates from a photo or written description, then review and adjust the results yourself.",
         "features": "What it does", "support_intro": "Questions about meal analysis, your diary, Apple Health and subscriptions.",
         "tiles": [("+", "Add meals", "Photos, barcodes, written descriptions, favourites or manual entry. Review and correct estimates."), ("○", "Daily goals", "A personal plan, calorie and macro tracking, water entries and meal reminders."), ("↗", "Progress", "Weight history, daily streaks and a weekly calorie view. Optional Apple Health connection.")],
@@ -653,7 +654,7 @@ BITE = {
 def bite(lang: str) -> None:
     t = BITE[lang]
     body = f'''<div class="wrap">
-<section class="app-hero"><div><p class="eyebrow">{t["soon"]}</p><h1>{t["h1"]}</h1><p class="lead">{t["lead"]}</p><a class="button primary" href="{p("bite-support", lang)}">{UI[lang]["support"]}</a> <a class="button ghost" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div><img class="mascot app-icon" src="/assets/formlybite.png" alt="Çilek"></section>
+<section class="app-hero"><div><p class="eyebrow">{t["soon"]}</p><h1>{t["h1"]}</h1><p class="lead">{t["lead"]}</p><a class="button primary" href="{BITE_STORE}">{HOME[lang]["open_store"]}</a> <a class="button ghost" href="{p("bite-support", lang)}">{UI[lang]["support"]}</a> <a class="button ghost" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div><img class="mascot" src="/assets/muzi.svg" alt="Muzi"></section>
 <section class="section"><h2>{t["features"]}</h2>{tiles(t["tiles"])}</section><p class="meta">{t["notice"]}</p></div>'''
     page("bite", lang, t["title"], t["card"], body, theme="bite")
 

@@ -9,4 +9,4 @@ FormlyConvert, FormlyStudy ve FormlyBite'ın ortak sitesi (GitHub Pages).
 - Renkler üç uygulamanın temalarından (`style.css` başı). Sayfa `theme-study`, `theme-convert` ya da `theme-bite` sınıfıyla vurgu rengini seçer.
 - `app-ads.txt` FormlyConvert'in AdMob kaydı içindir; silinmemeli.
 
-- FormlyBite sayfaları, uygulama yayımlanana kadar “yakında” durumundadır; App Store indirme bağlantısı eklenmez. `assets/formlybite.png` gerçek uygulama simgesidir.
+- FormlyBite 15 Ekim 2026'da App Store'da yayımlandı (`BITE_STORE`). Maskotu Muzi: `assets/muzi.svg`, uygulamadaki MuziFigure.swift ile aynı vektörlerden (FORMLYAPPS İNSTA/tools/characters.mjs üzerinden). `assets/formlybite.png` güncel uygulama simgesidir.
