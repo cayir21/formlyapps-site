@@ -78,6 +78,11 @@ def page(key: str, lang: str, title: str, description: str, body: str, theme: st
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(description)}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Formly">
+<meta property="og:title" content="{html.escape(title)}">
+<meta property="og:description" content="{html.escape(description)}">
+<meta property="og:url" content="{SITE}{path}">
 <meta name="theme-color" content="#F5F1EA" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1E1A16" media="(prefers-color-scheme: dark)">
 <link rel="canonical" href="{SITE}{path}">
@@ -239,50 +244,6 @@ STUDY = {
     },
 }
 
-CONVERT = {
-    "tr": {
-        "title": "FormlyConvert · Belge dönüştürücü",
-        "description": "FormlyConvert: PDF, Word, Excel, PowerPoint, görsel ve UDF dönüştürme; sıkıştırma, doldurma ve imzalama.",
-        "eyebrow": "FormlyConvert · App Store'da",
-        "h1": "Dosyan hangi biçimde olursa olsun.",
-        "lead": "FormlyConvert belgelerini birkaç dokunuşla dönüştürür ve düzenler. PDF'leri sıkıştırır, doldurur ve imzalar; belgeni özetler, kayıtlarını metne çevirir.",
-        "mascot_alt": "Formi, FormlyConvert'in maskotu",
-        "open_store": "App Store'da aç",
-        "features": "Neler yapar?",
-        "tiles": [
-            ("⇄", "Dönüştürme", "PDF, Word, Excel, PowerPoint, görsel, metin ve UDF arasında dönüştürür; işlem cihazında yapılır."),
-            ("↓", "Sıkıştır, doldur, imzala", "PDF'i küçültür, form alanlarını doldurur, tarih ve imzanı ekler."),
-            ("?", "Belge asistanı", "PDF'ini özetler, sorularını yanıtlar; taranmış sayfaları da okur. Varsayılan olarak cihazında çalışır."),
-            ("♪", "Ses ve videodan metin", "Kayıttaki konuşmayı PDF, Word ya da metin dosyasına çevirir."),
-            ("☁", "iCloud kütüphanesi", "Pro ile kütüphanen aynı Apple hesabındaki cihazlarında görünür."),
-            ("▦", "Widget ve paylaşım", "Son dosyaların ana ekranda; başka uygulamadan paylaşılan dosya doğrudan FormlyConvert'e gelir."),
-        ],
-        "meet_h": "Formi ile tanış",
-        "meet": "Formi, köşesi kıvrık, kilden yumuşak bir kâğıt. Sakin ve biraz esprili; dönüştürme sürerken düşünür, iş bitince gülümser.",
-    },
-    "en": {
-        "title": "FormlyConvert · Document converter",
-        "description": "FormlyConvert: convert PDF, Word, Excel, PowerPoint, image and UDF files; compress, fill in and sign PDFs.",
-        "eyebrow": "FormlyConvert · On the App Store",
-        "h1": "Whatever format your file is in.",
-        "lead": "FormlyConvert converts and edits your documents in a few taps. It compresses, fills in and signs PDFs, summarizes your documents and turns recordings into text.",
-        "mascot_alt": "Formi, the FormlyConvert mascot",
-        "open_store": "Open in the App Store",
-        "features": "What it does",
-        "tiles": [
-            ("⇄", "Conversion", "Converts between PDF, Word, Excel, PowerPoint, image, text and UDF, right on your device."),
-            ("↓", "Compress, fill, sign", "Shrinks PDFs, fills in form fields, and adds dates and your signature."),
-            ("?", "Document Assistant", "Summarizes your PDF and answers your questions, scanned pages included. Runs on your device by default."),
-            ("♪", "Audio and video to text", "Turns the speech in a recording into a PDF, Word or text file."),
-            ("☁", "iCloud Library", "With Pro, your library shows up on all devices signed in to the same Apple Account."),
-            ("▦", "Widgets and sharing", "Your recent files on the Home Screen; files shared from other apps go straight to FormlyConvert."),
-        ],
-        "meet_h": "Meet Formi",
-        "meet": "Formi is a soft, clay-like sheet of paper with a folded corner. Calm and a little witty, it thinks while your file converts and smiles when it's done.",
-    },
-}
-
-
 def study(lang: str) -> None:
     t = STUDY[lang]
     body = f"""<div class="wrap">
@@ -307,25 +268,181 @@ def study(lang: str) -> None:
     page("study", lang, t["title"], t["description"], body)
 
 
+CONVERT = {
+    "tr": {
+        "title": "FormlyConvert · PDF, Word, Excel ve UDF dönüştürücü",
+        "description": "FormlyConvert: PDF, Word, Excel, PowerPoint, görsel ve UYAP UDF dosyalarını iPhone ve iPad'de dönüştür, sıkıştır, doldur ve imzala. 39 belge aracı, dönüşümler cihazında.",
+        "h1": "Belge işlerinin hepsi, tek uygulamada.",
+        "lead": "PDF, Word, Excel, PowerPoint, görsel ve UYAP UDF dosyalarını dönüştür; PDF'leri sıkıştır, doldur ve imzala. Dönüşümler iPhone ya da iPad'inde yapılır; dosyaların bunun için bir sunucuya yüklenmez.",
+        "store": ("App Store'dan", "İndir"),
+        "store_meta": "Ücretsiz · iPhone ve iPad · iOS 17 ve sonrası",
+        "facts": [("39", "belge aracı"), ("10+", "dosya biçimi"), ("Cihazda", "yapılan dönüşümler"), ("iOS 17+", "iPhone ve iPad")],
+        "formats_label": "Desteklenen biçimler",
+        "formats": ["PDF", "Word", "Excel", "PowerPoint", "JPG", "PNG", "HEIC", "HTML", "TXT", "UYAP UDF", "Ses ve video"],
+        "rows": [
+            ("tools", "Dönüştür", "Hangi biçimde gelirse gelsin.",
+             "Araç Kutusu'nda 39 aracın hepsi tek ekranda. Aradığın aracı yazarak bul, sık kullandıklarını yıldızla.",
+             ["PDF'ten Word, Excel, PowerPoint, JPG, PNG ve metne", "Word, Excel, PowerPoint, HTML ve görsellerden PDF'e", "UYAP UDF dosyalarını saniyeler içinde PDF'e", "Birden fazla dosyayı tek seferde işle"]),
+            ("workspace", "Düzenle", "Belgeyi seç, sonrasına sen karar ver.",
+             "Açtığın belge bir çalışma alanına gelir: sayfalarını gör, sırayı değiştir, sonraki adımı oradan seç.",
+             ["Form rehberi PDF'teki alanları bulur ve seni tek tek gezdirir", "\"Bilgilerimle doldur\" ile ad, T.C. kimlik no, telefon ve adres tek dokunuşta", "İmzanı çiz; tarih, onay işareti ve QR kod ekle", "Taranmış sayfaları OCR ile aranabilir PDF'e çevir"]),
+            ("compress", "Sıkıştır ve paylaş", "Birkaç dokunuşla, gönderilmeye hazır.",
+             "Boyut ile kalite arasındaki dengeyi sen seç. Metin net kalır, yalnız görsel ağırlıklı sayfalar hafifler.",
+             ["Önce ve sonra karşılaştırması", "Mail, WhatsApp ya da Dosyalar'a tek dokunuşla", "Uzun işlemleri kilit ekranından ve Dynamic Island'dan izle", "Filigran, sayfa numarası, damga ve şifre ekle"]),
+            ("library", "Kütüphane", "Her dosya düzenli, her an elinin altında.",
+             "Dönüştürdüğün her belge kütüphanede tarih ve türe göre durur. Klasörlere ayır, önemlileri en üste sabitle.",
+             ["Dosya adıyla ara, türe göre süz", "Pro ile iCloud üzerinden iPhone ve iPad arasında eşitle", "Uygulamayı Face ID ile kilitle", "Ana ekran ve kilit ekranı widget'ları"]),
+        ],
+        "all_h": "Tüm araçlar, dört başlıkta",
+        "all_lead": "Araçlar işine göre gruplandı. Her biri kendi ekranında açılır ve ne yapacağını önceden gösterir.",
+        "groups": [
+            ("Dönüştür", ["PDF'ten Word", "PDF'ten Excel", "PDF'ten PowerPoint", "PDF'ten JPG ve PNG", "PDF'ten metin", "Word, Excel, PowerPoint'ten PDF", "HTML'den PDF", "Görsellerden PDF", "UDF'den PDF"]),
+            ("Düzenle", ["Birleştir", "Böl", "Sıkıştır", "Döndür", "Sayfaları düzenle", "Filigran", "Sayfa numarası", "Bates numarası", "Damga"]),
+            ("Doldur ve koru", ["Form doldur", "Bilgilerimle doldur", "İmza", "Şifrele", "Şifreyi kaldır", "Karart", "Onar", "Aranabilir PDF (OCR)"]),
+            ("Akıllı araçlar", ["Belge Asistanı: özet ve soru-cevap", "Sesli okuma", "Ses ve videodan metne", "Kamerayla tara", "Apple Pencil ile not"]),
+        ],
+        "privacy_eyebrow": "Gizlilik",
+        "privacy_h": "Dosyaların sende kalır.",
+        "privacy_lead": "Dönüşümler telefonunda yapılır. Hesap açman gerekmez; form bilgilerin yalnız bu cihazda saklanır.",
+        "privacy_points": [("Cihazda dönüşüm", "Belgelerin dönüştürülmek için bir sunucuya yüklenmez."), ("Hesap yok", "İndir ve hemen kullanmaya başla."), ("Önce cihazında", "Belge Asistanı ve sesten metne varsayılan olarak cihazında çalışır; buluta yalnız sen izin verirsen gider.")],
+        "privacy_link": "Gizlilik politikasını oku",
+        "faq_h": "Sık sorulanlar",
+        "faq": [
+            ("FormlyConvert ücretsiz mi?", "Uygulamayı ücretsiz indirip kullanabilirsin. Formly Pro ile sınırsız dönüşüm yapar, reklamsız kullanırsın; aylık, yıllık ve ömür boyu seçenekleri var. Abonelikler App Store hesap ayarlarından yönetilir."),
+            ("Dosyalarım internete yükleniyor mu?", "Hayır. Dönüştürme, sıkıştırma ve düzenleme cihazında yapılır; dosya içeriği sunucularımıza yüklenmez. iCloud eşitlemeyi açarsan kütüphanen kendi iCloud hesabında saklanır."),
+            ("UYAP UDF dosyasını nasıl açarım?", "UDF dosyasını Dosyalar, Mail ya da WhatsApp'tan FormlyConvert'e paylaş ve UDF'den PDF aracını seç. Sonucu PDF olarak kaydedip gönderebilirsin."),
+            ("Hangi cihazlarda çalışır?", "iOS 17 ve sonrası yüklü iPhone ve iPad'de. iPad'de Apple Pencil ile not alabilirsin."),
+            ("Sorun yaşarsam kime yazarım?", "Destek sayfasındaki adrese uygulama sürümünü ve sorunu kısaca yazman yeterli."),
+        ],
+        "cta_h": "Formi seni bekliyor.",
+        "cta_p": "Köşesi kıvrık, kilden yumuşak bir kâğıt. İlk adımlarda yol gösterir, dönüştürme sürerken düşünür, iş bitince gülümser.",
+        "mascot_alt": "Formi, FormlyConvert'in maskotu",
+        "shot_alt": "FormlyConvert ekranı:",
+    },
+    "en": {
+        "title": "FormlyConvert · PDF, Word, Excel and UDF converter",
+        "description": "FormlyConvert: convert, compress, fill in and sign PDF, Word, Excel, PowerPoint, image and UDF files on iPhone and iPad. 39 document tools, conversions on your device.",
+        "h1": "Every document task, in one app.",
+        "lead": "Convert PDF, Word, Excel, PowerPoint, image and UDF files; compress, fill in and sign PDFs. Conversions happen on your iPhone or iPad; your files aren't uploaded to a server for it.",
+        "store": ("Download on the", "App Store"),
+        "store_meta": "Free · iPhone and iPad · iOS 17 or later",
+        "facts": [("39", "document tools"), ("10+", "file formats"), ("On device", "conversions"), ("iOS 17+", "iPhone and iPad")],
+        "formats_label": "Supported formats",
+        "formats": ["PDF", "Word", "Excel", "PowerPoint", "JPG", "PNG", "HEIC", "HTML", "TXT", "UDF", "Audio and video"],
+        "rows": [
+            ("tools", "Convert", "Whatever format it arrives in.",
+             "All 39 tools live on one screen in the Toolbox. Type to find the one you need and star the ones you use most.",
+             ["PDF to Word, Excel, PowerPoint, JPG, PNG and text", "Word, Excel, PowerPoint, HTML and images to PDF", "UDF files to PDF in seconds", "Process several files at once"]),
+            ("workspace", "Edit", "Pick a document, decide what's next.",
+             "Every document opens in a workspace: see its pages, reorder them and choose your next step from there.",
+             ["The form guide finds the fields in your PDF and walks you through them", "\"Fill with my details\" fills name, phone, email and address in one tap", "Draw your signature; add dates, check marks and QR codes", "Make scanned pages searchable with OCR"]),
+            ("compress", "Compress and share", "Ready to send in a few taps.",
+             "Choose the balance between size and quality. Text stays sharp; only image-heavy pages get lighter.",
+             ["Compare before and after", "Send to Mail, WhatsApp or Files in one tap", "Follow long tasks on the Lock Screen and in the Dynamic Island", "Add watermarks, page numbers, stamps and passwords"]),
+            ("library", "Library", "Every file organized, always at hand.",
+             "Every document you convert is kept in the library by date and type. Sort them into folders and pin the important ones.",
+             ["Search by file name, filter by type", "With Pro, sync between iPhone and iPad through iCloud", "Lock the app with Face ID", "Home Screen and Lock Screen widgets"]),
+        ],
+        "all_h": "Every tool, in four groups",
+        "all_lead": "Tools are grouped by the job they do. Each opens on its own screen and shows what it will do first.",
+        "groups": [
+            ("Convert", ["PDF to Word", "PDF to Excel", "PDF to PowerPoint", "PDF to JPG and PNG", "PDF to text", "Word, Excel, PowerPoint to PDF", "HTML to PDF", "Images to PDF", "UDF to PDF"]),
+            ("Edit", ["Merge", "Split", "Compress", "Rotate", "Organize pages", "Watermark", "Page numbers", "Bates numbering", "Stamp"]),
+            ("Fill and protect", ["Fill forms", "Fill with my details", "Signature", "Protect", "Unlock", "Redact", "Repair", "Searchable PDF (OCR)"]),
+            ("Smart tools", ["Document Assistant: summaries and Q&A", "Read aloud", "Audio and video to text", "Scan with camera", "Notes with Apple Pencil"]),
+        ],
+        "privacy_eyebrow": "Privacy",
+        "privacy_h": "Your files stay with you.",
+        "privacy_lead": "Conversions run on your phone. No account needed; your form details are stored on this device only.",
+        "privacy_points": [("On-device conversion", "Your documents aren't uploaded to a server to be converted."), ("No account", "Download it and start right away."), ("On your device first", "The Document Assistant and transcription run on your device by default; nothing goes to the cloud unless you allow it.")],
+        "privacy_link": "Read the privacy policy",
+        "faq_h": "Frequently asked questions",
+        "faq": [
+            ("Is FormlyConvert free?", "You can download and use the app for free. Formly Pro gives you unlimited conversions without ads, with monthly, yearly and lifetime options. Subscriptions are managed in your App Store account settings."),
+            ("Are my files uploaded to the internet?", "No. Converting, compressing and editing happen on your device; file content isn't uploaded to our servers. If you turn on iCloud sync, your library is stored in your own iCloud account."),
+            ("How do I open a UDF file?", "Share the UDF file to FormlyConvert from Files, Mail or WhatsApp and choose the UDF to PDF tool. Save or send the result as a PDF."),
+            ("Which devices does it run on?", "iPhone and iPad with iOS 17 or later. On iPad you can take notes with Apple Pencil."),
+            ("Who do I contact if something goes wrong?", "Write to the address on the support page with your app version and a short description of the problem."),
+        ],
+        "cta_h": "Formi is waiting for you.",
+        "cta_p": "A soft, clay-like sheet of paper with a folded corner. It shows you around at first, thinks while your file converts and smiles when it's done.",
+        "mascot_alt": "Formi, the FormlyConvert mascot",
+        "shot_alt": "FormlyConvert screen:",
+    },
+}
+
+APPLE = '<svg aria-hidden="true" viewBox="0 0 384 512" width="20" height="24"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>'
+
+
+def store_button(lang: str) -> str:
+    small, big = CONVERT[lang]["store"]
+    return f'<a class="store" href="{CONVERT_STORE}">{APPLE}<span><small>{small}</small>{big}</span></a>'
+
+
+def phone(name: str, lang: str, eager: bool = False) -> str:
+    alt = f'{CONVERT[lang]["shot_alt"]} {name}'
+    loading = "" if eager else ' loading="lazy"'
+    return f'<div class="phone"><img src="/assets/convert/{name}-{lang}.jpg" width="600" height="1329" alt="{alt}"{loading} decoding="async"></div>'
+
+
 def convert(lang: str) -> None:
     t = CONVERT[lang]
-    body = f"""<div class="wrap">
-<section class="app-hero">
-<div>
-<p class="eyebrow">{t["eyebrow"]}</p>
+    facts = "".join(f"<li><strong>{n}</strong><span>{label}</span></li>" for n, label in t["facts"])
+    formats = "".join(f"<li>{f}</li>" for f in t["formats"])
+    rows = "".join(
+        f'''<section class="pc-row">
+<div class="pc-copy"><p class="eyebrow">{kicker}</p><h2>{h}</h2><p class="lead">{text}</p>
+<ul class="checks">{"".join(f"<li>{b}</li>" for b in bullets)}</ul></div>
+<div class="pc-shot">{phone(shot, lang)}</div>
+</section>'''
+        for shot, kicker, h, text, bullets in t["rows"]
+    )
+    groups = "".join(
+        f'<div class="tool-group"><h3>{name}</h3><ul>{"".join(f"<li>{x}</li>" for x in items)}</ul></div>'
+        for name, items in t["groups"]
+    )
+    points = "".join(f"<li><strong>{h}</strong><span>{p_}</span></li>" for h, p_ in t["privacy_points"])
+    faqs = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in t["faq"])
+    body = f"""<section class="pc-hero"><div class="wrap">
+<div class="pc-intro">
+<p class="app-id"><img src="/assets/convert/icon.png" width="44" height="44" alt=""><span>FormlyConvert</span></p>
 <h1>{t["h1"]}</h1>
 <p class="lead">{t["lead"]}</p>
-<a class="button primary" href="{CONVERT_STORE}">{t["open_store"]}</a> <a class="button ghost" href="{p("convert-support", lang)}">{UI[lang]["support"]}</a> <a class="button ghost" href="{p("convert-privacy", lang)}">{UI[lang]["privacy"]}</a>
+<div class="pc-cta">{store_button(lang)}<a class="button ghost" href="{p("convert-support", lang)}">{UI[lang]["support"]}</a></div>
+<p class="store-meta">{t["store_meta"]}</p>
 </div>
-<img class="mascot" src="/assets/formi.svg" alt="{t["mascot_alt"]}">
+<div class="pc-stage" aria-hidden="false">
+<div class="back">{phone("workspace", lang, eager=True)}</div>
+<div class="front">{phone("tools", lang, eager=True)}</div>
+<img class="pc-formi" src="/assets/formi.svg" alt="">
+</div>
+</div></section>
+<div class="wrap">
+<ul class="facts">{facts}</ul>
+<div class="formats"><p>{t["formats_label"]}</p><ul>{formats}</ul></div>
+{rows}
+<section class="section tools-all">
+<h2>{t["all_h"]}</h2>
+<p class="lead">{t["all_lead"]}</p>
+<div class="tool-groups">{groups}</div>
 </section>
-<section class="section">
-<h2>{t["features"]}</h2>
-{tiles(t["tiles"])}
+</div>
+<section class="pc-privacy"><div class="wrap">
+<div class="pc-copy"><p class="eyebrow">{t["privacy_eyebrow"]}</p><h2>{t["privacy_h"]}</h2><p class="lead">{t["privacy_lead"]}</p>
+<ul class="points">{points}</ul>
+<a class="more" href="{p("convert-privacy", lang)}">{t["privacy_link"]} →</a></div>
+<div class="pc-shot">{phone("privacy", lang)}</div>
+</div></section>
+<div class="wrap">
+<section class="section faq-list narrow">
+<h2>{t["faq_h"]}</h2>
+{faqs}
 </section>
-<section class="section">
-<h2>{t["meet_h"]}</h2>
-<p class="lead">{t["meet"]}</p>
+<section class="pc-final">
+<img src="/assets/formi.svg" alt="{t["mascot_alt"]}" width="120" height="120">
+<h2>{t["cta_h"]}</h2>
+<p>{t["cta_p"]}</p>
+{store_button(lang)}
 </section>
 </div>"""
     page("convert", lang, t["title"], t["description"], body, theme="convert")
