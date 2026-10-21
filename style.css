@@ -337,3 +337,14 @@ tr:last-child td { border-bottom: 0; }
     radial-gradient(60% 55% at 50% 45%, rgb(80 90 170 / .5), transparent 72%),
     radial-gradient(55% 35% at 40% 88%, rgb(160 120 210 / .5), transparent 70%); }
 }
+
+/* FormlyStudy ürün sayfası: FSPrimary yeşili, Tabi'nin turuncusu. */
+.pc-tabi { position: absolute; z-index: 3; width: 92px; left: -3%; bottom: 110px; rotate: -8deg; filter: drop-shadow(0 14px 18px rgb(20 50 40 / .25)); animation: bob 6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .pc-tabi { animation: none; } }
+@media (max-width: 900px) { .pc-tabi { width: 74px; bottom: 80px; left: -1%; } }
+.theme-study .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%233F7A70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.theme-study .pc-privacy { --accent: #6FB3A6; --accent-soft: #263F39; }
+.theme-study .pc-final img { width: 96px; }
+@media (prefers-color-scheme: dark) {
+  .theme-study .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%236FB3A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+}

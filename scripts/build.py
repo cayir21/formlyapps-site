@@ -21,6 +21,7 @@ SITE = "https://formlyapps.com"
 CONVERT_STORE = "https://apps.apple.com/app/id6759096094"
 BITE_STORE = "https://apps.apple.com/app/id6821417196"
 VAKIT_STORE = "https://apps.apple.com/app/id6759460194"
+STUDY_STORE = "https://apps.apple.com/app/id6819411851"
 STUDY_MAIL = "destek@formlyapps.com"
 CONVERT_MAIL = "formlyconvert@gmail.com"
 EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
@@ -203,9 +204,9 @@ def home(lang: str) -> None:
 <div class="actions"><a class="button primary" href="{CONVERT_STORE}">{t["open_store"]}</a><a class="button secondary" href="{p("convert", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("convert-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
 </article>
 <article class="app-card theme-study">
-<div><span class="badge">{t["soon"]}</span><h2>FormlyStudy</h2><p>{t["study"]}</p></div>
+<div><span class="badge">{t["on_store"]}</span><h2>FormlyStudy</h2><p>{t["study"]}</p></div>
 <img class="mascot" src="/assets/tabi.svg" alt="Tabi">
-<div class="actions"><a class="button primary" href="{p("study", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("study-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
+<div class="actions"><a class="button primary" href="{STUDY_STORE}">{t["open_store"]}</a><a class="button secondary" href="{p("study", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("study-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
 </article>
 <article class="app-card theme-bite">
 <div><span class="badge">{t["on_store"]}</span><h2>FormlyBite</h2><p>{BITE[lang]["card"]}</p></div>
@@ -228,66 +229,151 @@ def home(lang: str) -> None:
 
 # MARK: Uygulama sayfaları
 
+# Ekranlar FormlyStudy reposundaki App Store setinden (outputs/appstore/iphone-6.9) kesildi: telefonun ekran alanı, 600 px.
 STUDY = {
     "tr": {
-        "title": "FormlyStudy · PDF'lerinden öğren",
-        "description": "FormlyStudy: PDF'lerinden kaynak bağlantılı kartlar, testler, özetler ve zihin haritaları.",
-        "eyebrow": "FormlyStudy · Yakında App Store'da",
-        "h1": "PDF'lerinden öğren, kaynağından kopmadan.",
-        "lead": "FormlyStudy notlarından ve ders kitaplarından çalışma kartları, testler, özetler ve zihin haritaları hazırlar. Her kart PDF'teki satırına bağlıdır; bir dokunuşla kaynağını görürsün.",
-        "mascot_alt": "Tabi, FormlyStudy'nin maskotu",
-        "features": "Neler yapar?",
-        "tiles": [
-            ("K", "Kaynak bağlantılı kartlar", "Kartlar geldiği sayfa ve satırla eşleşir; desteye eklemeden önce gözden geçirirsin."),
-            ("T", "Akıllı tekrar", "Hatırlama gücüne göre ne zaman tekrar edeceğini planlar; sınav tarihine göre hızlanır."),
-            ("Q", "Test ve özet", "Konuyu sınayan çoktan seçmeli sorular ve kaynak sayfalı özetler hazırlar."),
-            ("H", "Zihin haritası", "Ana başlıkları ve kavramları canlı bir haritada bir araya getirir."),
-            ("C", "Önce cihazında", "Yapay zekâ varsayılan olarak cihazında çalışır; istersen bulutta hazırlatırsın."),
-            ("i", "iPhone ve iPad", "Pro ile kütüphanen iCloud üzerinden cihazların arasında eşitlenir."),
+        "title": "FormlyStudy · PDF'ten kart, quiz ve özet",
+        "description": "FormlyStudy: PDF'lerinden kaynak bağlantılı çalışma kartları, quiz, özet ve zihin haritası. Akıllı tekrar, sınav tarihine göre plan, Tabi'ye sor. iPhone ve iPad.",
+        "h1": "PDF'ini yükle, gerisi Tabi'de.",
+        "lead": "FormlyStudy ders notlarından ve kitaplarından çalışma kartları, quiz, özet ve zihin haritası hazırlar. Her kart PDF'teki satırına bağlıdır; emin olamadığında kaynağa tek dokunuşla dönersin.",
+        "store_meta": "Ücretsiz · iPhone ve iPad · iOS 18 ve sonrası",
+        "facts": [("4 araç", "kart, quiz, özet, zihin haritası"), ("Kaynağına bağlı", "her kart PDF'teki satırında"), ("Cihazda", "varsayılan yapay zekâ"), ("iOS 18+", "iPhone ve iPad")],
+        "rows": [
+            ("source", "Kaynak bağlantılı kartlar", "Her kart kaynağına bağlı.",
+             "Kartlar geldiği sayfa ve satırla birlikte hazırlanır. Kartta takıldığında PDF o satır vurgulanmış hâlde açılır.",
+             ["Kartları desteye girmeden önce gözden geçir", "PDF'te bir satır seç, \"Bu satırdan kart yaz\" ile kendi kartını ekle", "Taranmış sayfalar da cihazda okunur", "Kartlarını Anki'ye aktar (Pro)"]),
+            ("review", "Akıllı tekrar", "Unutmadan önce tekrar.",
+             "Tekrar planı ne kadar hatırladığına göre kurulur (FSRS). Sınav tarihini girersen hiçbir kart sınavdan sonraya kalmaz.",
+             ["Tekrar, Zor, İyi, Kolay: sonraki tekrar kendiliğinden planlanır", "Günlük hedef sınav tarihine göre ayarlanır", "Seri ateşi ve günlük hatırlatmalarla düzenli çalış", "Kartı başka dile çevir, açıklat ya da daha fazlasını iste"]),
+            ("quiz", "Quiz ve özet", "Kendini dene, özeti oku.",
+             "Konuyu ölçen çoktan seçmeli sorular ve başlık başlık özetler. Her soru ve her başlık PDF'teki sayfasına bağlı.",
+             ["Kolay, orta ve zor sorular", "Yanlışında \"Neden?\" ile açıklamayı gör", "Kaynak sayfalı, başlıklara ayrılmış özet", "Sayfaları, dili ve soru türünü sen seç"]),
+            ("mindmap", "Zihin haritası", "Konuyu bir bakışta gör.",
+             "Ana başlıklar ve kavramlar canlı bir haritada bir araya gelir. Yeni PDF eklediğinde harita kendiliğinden hazırlanır.",
+             ["Kaydır, yakınlaş, düğümleri sürükle", "Düğüme dokun: tek cümlelik not ve PDF'teki satırı", "Başlıklar ve kavramlar birbirine bağlı", "Değnekle haritayı yeniden oynat"]),
+            ("ask", "Tabi'ye sor", "Takıldığın yeri Tabi'ye sor.",
+             "Belgen hakkında soru sor; Tabi cevabı belgendeki satırlara dayanarak anlatır ve nereden geldiğini gösterir.",
+             ["Cevaplar yalnız senin PDF'inden gelir", "Örnek ver, akılda tutma ipucu, basitleştir", "Belgede olmayan soruya uydurmaz, söyler", "Varsayılan olarak cihazında çalışır"]),
+            ("scan", "Fotoğraftan tara", "Defterini tara, karta çevir.",
+             "Kamerayla tara ya da galeriden fotoğraf seç; sayfalar cihazında tek PDF olur ve öteki belgeler gibi çalışılır.",
+             ["Kamerayla belge tarama", "Galeriden en çok 30 fotoğraf", "Görüntüler sunucuya gönderilmez", "Klasörler ve kütüphanede arama"]),
         ],
-        "meet_h": "Tabi ile tanış",
-        "meet": "Tabi, kitabının arasında yerini tutan turuncu kurdele ayraç. Kartların hazırlanırken bekler, serini korursan sevinir, unuttuğun kartı sana hatırlatır.",
+        "privacy_eyebrow": "Gizlilik",
+        "privacy_h": "Belgelerin cihazında kalır.",
+        "privacy_lead": "PDF'lerin, kartların ve çalışma geçmişin cihazında durur. Yalnız sen bulut yapay zekâyı ya da iCloud eşitlemeyi açarsan cihazından çıkar.",
+        "privacy_points": [("Önce cihazında", "Yapay zekâ varsayılan olarak cihazında çalışır. Bulutu seçersen girişin ve onayın gerekir; yalnız gereken metin gönderilir."), ("Hesap şart değil", "Hesap açmadan başlarsın; bulut özellikleri için istersen hesap açarsın."), ("Reklam yok", "Reklam yok, izleme yok, verilerin satılmıyor.")],
+        "privacy_link": "Gizlilik politikasını oku",
+        "faq_h": "Sık sorulanlar",
+        "faq": [
+            ("FormlyStudy ücretsiz mi?", "İndirmek ve kullanmak ücretsiz; ücretsizde günde 3 belge, seferde 30 sayfa hazırlarsın. FormlyStudy Pro ile günde 50 belge ve seferde 300 sayfa, ayda 500 sayfa bulut yapay zekâ, iCloud eşitleme ve Anki'ye aktarma açılır. Pro haftalık, aylık ve yıllık abonelik; yıllık planda 3 günlük ücretsiz deneme var."),
+            ("Belgelerim bir sunucuya gönderiliyor mu?", "Varsayılan olarak hayır; kartlar, quiz, özet ve harita cihazında hazırlanır. Uzun belgeler için bulutu kendin seçersen giriş ve onayından sonra yalnız gereken metin gönderilir; PDF dosyası ve fotoğraflar gönderilmez."),
+            ("Kartlarım başka cihazımda görünür mü?", "Pro ile iCloud eşitlemeyi açarsan kütüphanen aynı Apple hesabındaki iPhone ve iPad arasında taşınır. PDF'ler varsayılan olarak yalnız Wi-Fi'da eşitlenir."),
+            ("Hangi cihazlarda çalışır?", "iOS 18 ve sonrası yüklü iPhone ve iPad'de. Cihazdaki yapay zekâ, Apple Intelligence'ı destekleyen cihazlarda çalışır; desteklemeyen cihazlarda bulutu seçebilirsin."),
+            ("Aboneliğimi nasıl yönetirim?", "iPhone'da Ayarlar › [adın] › Abonelikler'den ya da uygulamada Ayarlar › Aboneliği yönet'ten. Satın aldığın Pro görünmüyorsa Pro ekranındaki \"Satın alımları geri yükle\"yi aynı Apple hesabıyla kullan."),
+            ("Sorun yaşarsam kime yazarım?", "Destek sayfasındaki adrese uygulama sürümünü ve sorunu kısaca yazman yeterli."),
+        ],
+        "cta_h": "Tabi yerini tutuyor.",
+        "cta_p": "Kitabının arasında yerini tutan turuncu kurdele ayraç. Kartların hazırlanırken bekler, serini korursan sevinir, unuttuğun kartı sana hatırlatır.",
+        "mascot_alt": "Tabi, FormlyStudy'nin maskotu",
+        "shot_alt": "FormlyStudy ekranı:",
     },
     "en": {
-        "title": "FormlyStudy · Learn from your PDFs",
-        "description": "FormlyStudy: source-linked cards, quizzes, summaries and mind maps from your PDFs.",
-        "eyebrow": "FormlyStudy · Coming soon to the App Store",
-        "h1": "Learn from your PDFs, never losing the source.",
-        "lead": "FormlyStudy turns your notes and textbooks into study cards, quizzes, summaries and mind maps. Every card is linked to its line in the PDF, so the source is always one tap away.",
-        "mascot_alt": "Tabi, the FormlyStudy mascot",
-        "features": "What it does",
-        "tiles": [
-            ("K", "Source-linked cards", "Each card is matched to the page and line it came from; you review them before they join your deck."),
-            ("T", "Smart review", "Schedules reviews based on how well you remember, and speeds up as your exam date gets closer."),
-            ("Q", "Quizzes and summaries", "Builds multiple-choice questions that test the topic, and summaries with source pages."),
-            ("H", "Mind maps", "Brings the main topics and concepts together in a living map."),
-            ("C", "On your device first", "AI runs on your device by default; you can choose the cloud when you want."),
-            ("i", "iPhone and iPad", "With Pro, your library syncs between your devices through iCloud."),
+        "title": "FormlyStudy · Cards, quizzes and summaries from PDFs",
+        "description": "FormlyStudy: source-linked flashcards, quizzes, summaries and mind maps from your PDFs. Smart review, exam-date planning and Ask Tabi. iPhone and iPad.",
+        "h1": "Add your PDF. Tabi does the rest.",
+        "lead": "FormlyStudy turns your notes and textbooks into flashcards, quizzes, summaries and mind maps. Every card is linked to its line in the PDF, so the source is always one tap away.",
+        "store_meta": "Free · iPhone and iPad · iOS 18 or later",
+        "facts": [("4 tools", "cards, quizzes, summaries, mind maps"), ("Source-linked", "every card at its line in the PDF"), ("On device", "AI by default"), ("iOS 18+", "iPhone and iPad")],
+        "rows": [
+            ("source", "Source-linked cards", "Every card linked to its source.",
+             "Cards are made with the page and line they came from. When you're stuck, the PDF opens with that line highlighted.",
+             ["Review cards before they join your deck", "Select a line in the PDF and tap \"Write a card from this line\"", "Scanned pages are read on your device", "Export your cards to Anki (Pro)"]),
+            ("review", "Smart review", "Review before you forget.",
+             "Reviews are scheduled by how well you remember (FSRS). Add your exam date and no card is left for after the exam.",
+             ["Again, Hard, Good, Easy: the next review is planned for you", "Your daily goal adjusts to your exam date", "Keep it steady with your streak flame and daily reminders", "Translate a card, get an explanation or ask for more"]),
+            ("quiz", "Quizzes and summaries", "Test yourself, read the summary.",
+             "Multiple-choice questions that test the topic, and summaries section by section. Every question and section is linked to its page in the PDF.",
+             ["Easy, medium and hard questions", "Tap \"Why?\" to see the explanation", "Summaries split into sections, with source pages", "Choose the pages, language and question types"]),
+            ("mindmap", "Mind maps", "See the topic at a glance.",
+             "Main topics and concepts come together in a living map. When you add a new PDF, its map is prepared for you.",
+             ["Pan, zoom and drag the nodes", "Tap a node for a one-line note and its line in the PDF", "Topics and concepts linked together", "Replay the map with the magic wand"]),
+            ("ask", "Ask Tabi", "Stuck? Ask Tabi.",
+             "Ask a question about your document. Tabi explains the answer from the lines in your PDF and shows where it came from.",
+             ["Answers come only from your PDF", "Give an example, a memory tip, or simplify", "If it isn't in the document, Tabi says so", "Runs on your device by default"]),
+            ("scan", "Scan from photos", "Scan your notebook, turn it into cards.",
+             "Scan with the camera or pick photos; the pages become one PDF on your device and work like any other document.",
+             ["Document scanning with the camera", "Up to 30 photos from your library", "Images are never sent to a server", "Folders and library search"]),
         ],
-        "meet_h": "Meet Tabi",
-        "meet": "Tabi is the orange ribbon bookmark that keeps your place in the book. It waits while your cards are being made, cheers when you keep your streak, and reminds you of the cards you forget.",
+        "privacy_eyebrow": "Privacy",
+        "privacy_h": "Your documents stay on your device.",
+        "privacy_lead": "Your PDFs, cards and study history stay on your device. They only leave it if you turn on cloud AI or iCloud sync.",
+        "privacy_points": [("On your device first", "AI runs on your device by default. Choosing the cloud needs your sign-in and consent; only the text that's needed is sent."), ("No account needed", "Start without signing up; create an account only if you want the cloud features."), ("No ads", "No ads, no tracking, and your data is never sold.")],
+        "privacy_link": "Read the privacy policy",
+        "faq_h": "Frequently asked questions",
+        "faq": [
+            ("Is FormlyStudy free?", "It's free to download and use; free use covers 3 documents a day and 30 pages at a time. FormlyStudy Pro unlocks 50 documents a day and 300 pages at a time, 500 pages of cloud AI a month, iCloud sync and Anki export. Pro is a weekly, monthly or yearly subscription; the yearly plan includes a 3-day free trial."),
+            ("Are my documents sent to a server?", "Not by default; cards, quizzes, summaries and maps are prepared on your device. If you choose the cloud for a long document, only the text that's needed is sent after you sign in and consent; PDF files and photos are not sent."),
+            ("Will my cards show up on my other device?", "With Pro, turn on iCloud sync and your library moves between the iPhone and iPad signed in to the same Apple Account. By default, PDFs sync only over Wi-Fi."),
+            ("Which devices does it run on?", "iPhone and iPad with iOS 18 or later. On-device AI works on devices that support Apple Intelligence; on others you can choose the cloud."),
+            ("How do I manage my subscription?", "In iPhone Settings › [your name] › Subscriptions, or Settings › Manage subscription in the app. If your Pro purchase doesn't show up, tap \"Restore purchases\" on the Pro screen with the same Apple Account."),
+            ("Who do I contact if something goes wrong?", "Write to the address on the support page with your app version and a short description of the problem."),
+        ],
+        "cta_h": "Tabi keeps your place.",
+        "cta_p": "The orange ribbon bookmark that keeps your place in the book. It waits while your cards are being made, cheers when you keep your streak, and reminds you of the cards you forget.",
+        "mascot_alt": "Tabi, the FormlyStudy mascot",
+        "shot_alt": "FormlyStudy screen:",
     },
 }
 
+
 def study(lang: str) -> None:
     t = STUDY[lang]
-    body = f"""<div class="wrap">
-<section class="app-hero">
-<div>
-<p class="eyebrow">{t["eyebrow"]}</p>
+    shot = lambda name, eager=False: phone(name, lang, eager, app="study", alt=f'{t["shot_alt"]} {name}')
+    facts = "".join(f"<li><strong>{n}</strong><span>{label}</span></li>" for n, label in t["facts"])
+    rows = "".join(
+        f'''<section class="pc-row">
+<div class="pc-copy"><p class="eyebrow">{kicker}</p><h2>{h}</h2><p class="lead">{text}</p>
+<ul class="checks">{"".join(f"<li>{b}</li>" for b in bullets)}</ul></div>
+<div class="pc-shot">{shot(name)}</div>
+</section>'''
+        for name, kicker, h, text, bullets in t["rows"]
+    )
+    points = "".join(f"<li><strong>{h}</strong><span>{p_}</span></li>" for h, p_ in t["privacy_points"])
+    faqs = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in t["faq"])
+    body = f"""<section class="pc-hero"><div class="wrap">
+<div class="pc-intro">
+<p class="app-id"><img src="/assets/study/icon.png" width="44" height="44" alt=""><span>FormlyStudy</span></p>
 <h1>{t["h1"]}</h1>
 <p class="lead">{t["lead"]}</p>
-<a class="button primary" href="{p("study-support", lang)}">{UI[lang]["support"]}</a> <a class="button ghost" href="{p("study-privacy", lang)}">{UI[lang]["privacy"]}</a>
+<div class="pc-cta">{store_button(lang, STUDY_STORE)}<a class="button ghost" href="{p("study-support", lang)}">{UI[lang]["support"]}</a></div>
+<p class="store-meta">{t["store_meta"]}</p>
 </div>
-<img class="mascot" src="/assets/tabi.svg" alt="{t["mascot_alt"]}">
+<div class="pc-stage">
+<div class="back">{shot("hub", True)}</div>
+<div class="front">{shot("review", True)}</div>
+<img class="pc-tabi" src="/assets/tabi.svg" alt="">
+</div>
+</div></section>
+<div class="wrap">
+<ul class="facts">{facts}</ul>
+{rows}
+</div>
+<section class="pc-privacy"><div class="wrap">
+<div class="pc-copy"><p class="eyebrow">{t["privacy_eyebrow"]}</p><h2>{t["privacy_h"]}</h2><p class="lead">{t["privacy_lead"]}</p>
+<ul class="points">{points}</ul>
+<a class="more" href="{p("study-privacy", lang)}">{t["privacy_link"]} →</a></div>
+<div class="pc-shot">{shot("library")}</div>
+</div></section>
+<div class="wrap">
+<section class="section faq-list narrow">
+<h2>{t["faq_h"]}</h2>
+{faqs}
 </section>
-<section class="section">
-<h2>{t["features"]}</h2>
-{tiles(t["tiles"])}
-</section>
-<section class="section">
-<h2>{t["meet_h"]}</h2>
-<p class="lead">{t["meet"]}</p>
+<section class="pc-final">
+<img src="/assets/tabi.svg" alt="{t["mascot_alt"]}" width="120" height="120">
+<h2>{t["cta_h"]}</h2>
+<p>{t["cta_p"]}</p>
+{store_button(lang, STUDY_STORE)}
 </section>
 </div>"""
     page("study", lang, t["title"], t["description"], body)
@@ -407,7 +493,7 @@ def store_button(lang: str, url: str = CONVERT_STORE) -> str:
 
 def phone(name: str, lang: str, eager: bool = False, app: str = "convert", alt: str = "") -> str:
     """App Store setinden kesilmiş ekran; assets/<app>/<name>-<lang>.jpg, 600 px genişlik."""
-    height = {"convert": 1329, "bite": 1305}[app]
+    height = {"convert": 1329, "bite": 1305, "study": 1272}[app]
     alt = alt or f'{CONVERT[lang]["shot_alt"]} {name}'
     loading = "" if eager else ' loading="lazy"'
     return f'<div class="phone"><img src="/assets/{app}/{name}-{lang}.jpg" width="600" height="{height}" alt="{alt}"{loading} decoding="async"></div>'
