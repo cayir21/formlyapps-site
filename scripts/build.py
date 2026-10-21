@@ -6,7 +6,8 @@ Varsayılan yol: ../İOS/FormlyStudy. FormlyStudy gizlilik politikası oradaki
 docs/legal/privacy-policy-tr.md ve privacy-policy-en.md'den, FormlyConvert'inki
 content/formlyconvert-privacy-en.md'den üretilir; diğer metinler bu dosyadadır.
 
-Türkçe sayfalar kökte, İngilizceleri /en/ altında. Her sayfanın iki adresi PATHS'te eşlenir.
+Türkçe sayfalar kökte, İngilizceleri /en/ altında. Her sayfanın adresleri PATHS'te eşlenir.
+VakitApp sayfalarının ayrıca Almancası var (/de/vakitapp/); diğer sayfalarda Almanca yoksa İngilizcesine bağlanılır.
 """
 import html
 import re
@@ -19,6 +20,7 @@ SITE = "https://formlyapps.com"
 
 CONVERT_STORE = "https://apps.apple.com/app/id6759096094"
 BITE_STORE = "https://apps.apple.com/app/id6821417196"
+VAKIT_STORE = "https://apps.apple.com/app/id6759460194"
 STUDY_MAIL = "destek@formlyapps.com"
 CONVERT_MAIL = "formlyconvert@gmail.com"
 EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
@@ -35,42 +37,57 @@ PATHS = {
     "convert-support": {"tr": "/formlyconvert/destek/", "en": "/en/formlyconvert/support/"},
     "study-privacy": {"tr": "/formlystudy/gizlilik/", "en": "/en/formlystudy/privacy/"},
     "convert-privacy": {"tr": "/formlyconvert/gizlilik/", "en": "/en/formlyconvert/privacy/"},
+    "vakit": {"tr": "/vakitapp/", "en": "/en/vakitapp/", "de": "/de/vakitapp/"},
+    "vakit-support": {"tr": "/vakitapp/destek/", "en": "/en/vakitapp/support/", "de": "/de/vakitapp/hilfe/"},
+    "vakit-privacy": {"tr": "/vakitapp/gizlilik/", "en": "/en/vakitapp/privacy/", "de": "/de/vakitapp/datenschutz/"},
+    "vakit-terms": {"tr": "/vakitapp/kosullar/", "en": "/en/vakitapp/terms/", "de": "/de/vakitapp/nutzungsbedingungen/"},
 }
+
+LANG_LABEL = {"tr": ("TR", "Türkçe"), "en": ("EN", "English"), "de": ("DE", "Deutsch")}
 
 UI = {
     "tr": {
         "support": "Destek", "privacy": "Gizlilik", "menu": "Ana menü", "footer": "Alt menü",
         "study_privacy": "FormlyStudy gizlilik", "study_support": "FormlyStudy destek",
         "convert_privacy": "FormlyConvert gizlilik", "convert_support": "FormlyConvert destek",
-        "terms": "Kullanım koşulları", "other": "EN", "other_label": "English",
+        "terms": "Kullanım koşulları",
     },
     "en": {
         "support": "Support", "privacy": "Privacy", "menu": "Main menu", "footer": "Footer menu",
         "study_privacy": "FormlyStudy privacy", "study_support": "FormlyStudy support",
         "convert_privacy": "FormlyConvert privacy", "convert_support": "FormlyConvert support",
-        "terms": "Terms of use", "other": "TR", "other_label": "Türkçe",
+        "terms": "Terms of use",
+    },
+    "de": {
+        "support": "Hilfe", "privacy": "Datenschutz", "menu": "Hauptmenü", "footer": "Fußzeilenmenü",
+        "study_privacy": "FormlyStudy Datenschutz", "study_support": "FormlyStudy Hilfe",
+        "convert_privacy": "FormlyConvert Datenschutz", "convert_support": "FormlyConvert Hilfe",
+        "terms": "Nutzungsbedingungen",
     },
 }
 
 
 def p(key: str, lang: str) -> str:
-    return PATHS[key][lang]
+    return PATHS[key].get(lang) or PATHS[key]["en"]
 
 
 # MARK: Şablon
 
 def page(key: str, lang: str, title: str, description: str, body: str, theme: str = "study", doc_lang: str | None = None) -> None:
     ui = UI[lang]
-    other = "en" if lang == "tr" else "tr"
+    langs = list(PATHS[key])
     path = p(key, lang)
-    nav = [(p("study", lang), "FormlyStudy"), (p("convert", lang), "FormlyConvert"), (p("bite", lang), "FormlyBite"), (p("support", lang), ui["support"])]
+    nav = [(p("study", lang), "FormlyStudy"), (p("convert", lang), "FormlyConvert"), (p("bite", lang), "FormlyBite"), (p("vakit", lang), "VakitApp"), (p("support", lang), ui["support"])]
     links = "".join(
         f'<a href="{href}"{" aria-current=\"page\"" if path.startswith(href) else ""}>{label}</a>'
         for href, label in nav
     )
-    switch = f'<a class="lang" href="{p(key, other)}" hreflang="{other}" lang="{other}" aria-label="{ui["other_label"]}" title="{ui["other_label"]}">{ui["other"]}</a>'
+    switch = "".join(
+        f'<a class="lang" href="{p(key, code)}" hreflang="{code}" lang="{code}" aria-label="{LANG_LABEL[code][1]}" title="{LANG_LABEL[code][1]}">{LANG_LABEL[code][0]}</a>'
+        for code in langs if code != lang
+    )
     alternates = "\n".join(
-        f'<link rel="alternate" hreflang="{code}" href="{SITE}{p(key, code)}">' for code in ("tr", "en")
+        f'<link rel="alternate" hreflang="{code}" href="{SITE}{p(key, code)}">' for code in langs
     ) + f'\n<link rel="alternate" hreflang="x-default" href="{SITE}{p(key, "en")}">'
     document = f"""<!doctype html>
 <html lang="{doc_lang or lang}">
@@ -108,6 +125,8 @@ def page(key: str, lang: str, title: str, description: str, body: str, theme: st
 <a href="{p("convert-support", lang)}">{ui["convert_support"]}</a>
 <a href="{p("bite-privacy", lang)}">FormlyBite {ui["privacy"]}</a>
 <a href="{p("bite-support", lang)}">FormlyBite {ui["support"]}</a>
+<a href="{p("vakit-privacy", lang)}">VakitApp {ui["privacy"]}</a>
+<a href="{p("vakit-support", lang)}">VakitApp {ui["support"]}</a>
 <a href="{EULA}">{ui["terms"]}</a>
 </nav>
 </div></footer>
@@ -131,10 +150,10 @@ def tiles(items: list[tuple[str, str, str]]) -> str:
 
 HOME = {
     "tr": {
-        "title": "Formly · FormlyConvert, FormlyStudy ve FormlyBite",
-        "description": "Belgelerin, öğrenmen ve öğün günlüğün için Formly uygulamaları.",
+        "title": "Formly · FormlyConvert, FormlyStudy, FormlyBite ve VakitApp",
+        "description": "Belgelerin, öğrenmen, öğün günlüğün ve namaz vakitlerin için Formly uygulamaları.",
         "h1": "Gününe eşlik eden küçük yardımcılar.",
-        "lead": "FormlyConvert dosyalarını dönüştürür, FormlyStudy onlardan öğrenmeni sağlar. FormlyBite ise öğünlerini ve günlük hedeflerini takip etmene yardımcı olur.",
+        "lead": "FormlyConvert dosyalarını dönüştürür, FormlyStudy onlardan öğrenmeni sağlar. FormlyBite öğünlerini ve günlük hedeflerini, VakitApp ise namaz vakitlerini ve günlük ibadetini takip etmene yardımcı olur.",
         "cta": "Uygulamaları gör", "anchor": "uygulamalar",
         "on_store": "App Store'da", "soon": "Yakında", "open_store": "App Store'da aç", "meet": "Tanı",
         "convert": "PDF, Word, Excel, PowerPoint, görsel ve UDF dosyalarını dönüştürür; PDF'leri sıkıştırır, doldurur ve imzalar. Yanında kâğıttan dostu Formi.",
@@ -147,10 +166,10 @@ HOME = {
         ],
     },
     "en": {
-        "title": "Formly · FormlyConvert, FormlyStudy and FormlyBite",
-        "description": "Formly apps for your documents, learning and food diary.",
+        "title": "Formly · FormlyConvert, FormlyStudy, FormlyBite and VakitApp",
+        "description": "Formly apps for your documents, learning, food diary and prayer times.",
         "h1": "Small helpers for your day.",
-        "lead": "FormlyConvert converts your files, FormlyStudy helps you learn from them. FormlyBite helps you track meals and daily goals.",
+        "lead": "FormlyConvert converts your files, FormlyStudy helps you learn from them. FormlyBite helps you track meals and daily goals, and VakitApp keeps your prayer times and daily worship.",
         "cta": "See the apps", "anchor": "apps",
         "on_store": "On the App Store", "soon": "Coming soon", "open_store": "Open in the App Store", "meet": "Learn more",
         "convert": "Converts PDF, Word, Excel, PowerPoint, image and UDF files; compresses, fills in and signs PDFs. With Formi, its paper friend.",
@@ -192,6 +211,11 @@ def home(lang: str) -> None:
 <div><span class="badge">{t["on_store"]}</span><h2>FormlyBite</h2><p>{BITE[lang]["card"]}</p></div>
 <img class="mascot" src="/assets/muzi.svg" alt="Muzi">
 <div class="actions"><a class="button primary" href="{BITE_STORE}">{t["open_store"]}</a><a class="button secondary" href="{p("bite", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("bite-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
+</article>
+<article class="app-card theme-vakit">
+<div><span class="badge">{t["on_store"]}</span><h2>VakitApp</h2><p>{VAKIT[lang]["card"]}</p></div>
+<img class="mascot app-icon" src="/assets/vakit/icon.png" alt="VakitApp">
+<div class="actions"><a class="button primary" href="{VAKIT_STORE}">{t["open_store"]}</a><a class="button secondary" href="{p("vakit", lang)}">{t["meet"]}</a><a class="button secondary" href="{p("vakit-privacy", lang)}">{UI[lang]["privacy"]}</a></div>
 </article>
 </section>
 <section class="section">
@@ -456,10 +480,10 @@ def convert(lang: str) -> None:
 
 def support_hub(lang: str) -> None:
     t = {
-        "tr": ("Destek", "Destek · Formly", "FormlyConvert, FormlyStudy ve FormlyBite için destek.", "Hangi uygulama için yardım istiyorsun?",
+        "tr": ("Destek", "Destek · Formly", "FormlyConvert, FormlyStudy, FormlyBite ve VakitApp için destek.", "Hangi uygulama için yardım istiyorsun?",
                "Dönüştürme, abonelik ve hesap soruları.", "FormlyConvert desteği",
                "Kartlar, tekrar, hesap ve abonelik soruları.", "FormlyStudy desteği"),
-        "en": ("Support", "Support · Formly", "Support for FormlyConvert, FormlyStudy and FormlyBite.", "Which app do you need help with?",
+        "en": ("Support", "Support · Formly", "Support for FormlyConvert, FormlyStudy, FormlyBite and VakitApp.", "Which app do you need help with?",
                "Conversion, subscription and account questions.", "FormlyConvert support",
                "Cards, reviews, account and subscription questions.", "FormlyStudy support"),
     }[lang]
@@ -470,6 +494,7 @@ def support_hub(lang: str) -> None:
 <article class="app-card theme-convert"><div><h2>FormlyConvert</h2><p>{t[4]}</p></div><img class="mascot" src="/assets/formi.svg" alt=""><div class="actions"><a class="button primary" href="{p("convert-support", lang)}">{t[5]}</a></div></article>
 <article class="app-card theme-study"><div><h2>FormlyStudy</h2><p>{t[6]}</p></div><img class="mascot" src="/assets/tabi.svg" alt=""><div class="actions"><a class="button primary" href="{p("study-support", lang)}">{t[7]}</a></div></article>
 <article class="app-card theme-bite"><div><h2>FormlyBite</h2><p>{BITE[lang]["support_intro"]}</p></div><img class="mascot" src="/assets/muzi.svg" alt=""><div class="actions"><a class="button primary" href="{p("bite-support", lang)}">FormlyBite {UI[lang]["support"]}</a></div></article>
+<article class="app-card theme-vakit"><div><h2>VakitApp</h2><p>{VAKIT[lang]["support_intro"]}</p></div><img class="mascot app-icon" src="/assets/vakit/icon.png" alt=""><div class="actions"><a class="button primary" href="{p("vakit-support", lang)}">VakitApp {UI[lang]["support"]}</a></div></article>
 </div>
 </div>"""
     page("support", lang, t[1], t[2], body)
@@ -566,7 +591,7 @@ def markdown(source: str) -> tuple[str, str, str]:
             out.append(f"<h2>{inline(line[3:])}</h2>")
         elif line.startswith("### "):
             out.append(f"<h3>{inline(line[4:])}</h3>")
-        elif line.startswith(("Son güncelleme:", "Last updated:")):
+        elif line.startswith(("Son güncelleme:", "Last updated:", "Stand:")):
             updated = line.strip()
         elif line.startswith("|"):
             rows = []
@@ -603,7 +628,7 @@ def markdown(source: str) -> tuple[str, str, str]:
 
 def privacy(source: Path, key: str, lang: str, description: str, theme: str, doc_lang: str | None = None, note: str = "") -> None:
     title, updated, body = markdown(source.read_text(encoding="utf-8"))
-    for label in ("Kısaca:", "In short:"):
+    for label in ("Kısaca:", "In short:", "Kurz gesagt:"):
         body = body.replace(f"<p>{label}</p>\n<ul>", f'<div class="summary"><p><strong>{label.rstrip(":")}</strong></p><ul>', 1)
     if 'class="summary"' in body:
         start = body.index('class="summary"')
@@ -791,7 +816,232 @@ def bite_privacy(lang: str) -> None:
             BITE[lang]["support_intro"], "bite")
 
 
+# MARK: VakitApp
+# Ekranlar 1.0.8 App Store setinden (tr: App Store Connect, en/de: VakitApp reposu Docs/AppStore/1.0.8/screenshots).
+# Görseller zaten telefon çerçeveli olduğu için .phone yerine .shot sınıfıyla gösterilir.
+VAKIT = {
+    "tr": {
+        "title": "VakitApp · Namaz vakitleri, imsakiye ve kıble",
+        "description": "VakitApp: Diyanet'in resmî namaz vakitleri, sessizde de çalan sahur ve vakit alarmı, imsakiye, kıble, Kur'an ve Ortak Hatim. iPhone, iPad ve Apple Watch için.",
+        "card": "Diyanet'in resmî namaz vakitleri, sessizde de çalan sahur alarmı, kıble, Kur'an ve ailenle Ortak Hatim. Gün boyu değişen bir gökyüzüyle.",
+        "h1": "Vakitler, günün ışığıyla.",
+        "lead": "VakitApp namaz vakitlerini ve günlük ibadetini sade, güvenilir ve güzel bir şekilde takip etmen için tasarlandı. Türkiye'de ve yurt dışında Diyanet vakitleri, gün boyu değişen bir gökyüzüyle.",
+        "store_meta": "Ücretsiz · iPhone, iPad ve Apple Watch · iOS 17 ve sonrası",
+        "facts": [("Diyanet", "resmî namaz vakitleri"), ("7.000+", "yurt dışı şehir"), ("Alarm", "sessizde de çalar"), ("TR · EN · DE", "arayüz dili")],
+        "rows": [
+            ("home", "Ana ekran", "Sıradaki vakit, bir bakışta.",
+             "Geri sayım, günün altı vakti ve vakte göre renk değiştiren bir gökyüzü. Kıldığın namazı tek dokunuşla işaretle.",
+             ["Sıradaki vakte saniye saniye geri sayım", "Kilit ekranında ve Dynamic Island'da canlı sayaç", "\"Kıldım\" işaretleme ve namaz takibi", "Uygulamayı açmadan işaretlenen widget'lar"]),
+            ("calendar", "İmsakiye", "Ayın tamamı, Diyanet'ten.",
+             "Türkiye'deki tüm il ve ilçeler için Diyanet İşleri Başkanlığı'nın resmî vakitleri. Yurt dışında en yakın Diyanet şehrinin vakti.",
+             ["Aylık imsakiye tablosu", "Yurt dışında 7.000'den fazla şehir, dünyanın her yerinde şehir arama", "Hicri tarih ve dini günler", "Kerahat vakti uyarısı"]),
+            ("reminder", "Hatırlatma ve alarm", "Vakti kaçırma.",
+             "Her vakit için ezan bildirimi ve vakitten önce hatırlatma. Sahur alarmı telefon sessizdeyken bile çalar.",
+             ["Vakit öncesi esnek hatırlatmalar", "Sessizde ve Odak açıkken tam ekran çalan, ertelenebilir alarm", "Cuma ve kandil bildirimleri", "Farklı ezan sesleri"]),
+            ("quran", "Kur'an ve ibadet", "Kaldığın yerden devam et.",
+             "114 sure, meal ve tilavet. Ailenle ya da arkadaşlarınla Ortak Hatim başlat; herkes bir cüz alsın.",
+             ["Arapça metin, tecvid renkleri, ayet ayet tilavet", "Elmalılı ve İngilizce Pickthall meali", "Ortak Hatim ve Namaz Rehberi", "Tesbihat, zikirmatik, dualar ve Esmâ-ül Hüsnâ"]),
+        ],
+        "privacy_eyebrow": "Gizlilik",
+        "privacy_h": "İbadetin sende kalır.",
+        "privacy_lead": "Ayarların ve namaz takibin cihazında tutulur. Pro ile iCloud eşitlemeyi açarsan kendi iCloud hesabına kaydedilir.",
+        "privacy_points": [("Hesap yok", "Ad, e-posta ya da telefon istenmez; indir ve şehrini seç."), ("Konumun cihazında", "Vakitler için yalnız seçtiğin şehir gönderilir; konumunu sunucularımızda saklamayız."), ("Sakin ekranlar", "Geri sayımda ve kıble ekranında reklam yok. Pro ile hiç reklam görmezsin.")],
+        "privacy_link": "Gizlilik politikasını oku",
+        "faq_h": "Sık sorulanlar",
+        "faq": [
+            ("Vakitler nereden geliyor?", "Türkiye'deki tüm il ve ilçeler için Diyanet İşleri Başkanlığı'nın resmî servisinden. Yurt dışında bulunduğun yere en yakın Diyanet şehrinin vakti kullanılır."),
+            ("VakitApp ücretsiz mi?", "Evet, indirmek ve kullanmak ücretsiz; ücretsiz sürümde bazı ekranlarda banner reklam var. Pro Ömür Boyu tek seferlik bir satın alımdır: reklamsız kullanım, tüm ezan sesleri, premium tema ve simgeler, 25 konum ve iCloud eşitleme. Pro Plus aylık aboneliği bunlara 45/60 dakika önce hatırlatma ve 6 aya kadar çevrimdışı vakit ekler."),
+            ("Alarm telefon sessizdeyken çalar mı?", "Evet. Sahur ve vakit alarmı, telefon sessizdeyken ya da Odak açıkken de tam ekran çalar ve ertelenebilir. Ayarlar › Alarmlar'dan açılır; iOS 26 ve sonrası gerekir."),
+            ("İnternet olmadan çalışır mı?", "İndirilen vakitler cihazında saklanır, bu yüzden bağlantı olmadığında da vakitlerini görürsün. Pro Plus ile 6 aya kadar önceden indirebilirsin."),
+            ("Hangi dilleri destekliyor?", "Türkçe, English ve Deutsch. Hadisler, dualar, Risale-i Nur ve Cevşen gibi bazı içerikler şimdilik yalnız Türkçe."),
+            ("Aboneliğimi nasıl yönetirim?", "iPhone'da Ayarlar › [adın] › Abonelikler bölümünden yönetebilir ya da iptal edebilirsin. Satın alımını geri yüklemek için uygulamadaki geri yükleme seçeneğini aynı Apple hesabıyla kullan."),
+        ],
+        "cta_h": "Vaktin, cebinde.",
+        "cta_p": "VakitApp'i indir, şehrini seç. Gökyüzü sana vaktin geldiğini haber versin.",
+        "support_intro": "Vakitler, alarm ve bildirimler, Ortak Hatim ve satın alma soruları.",
+        "support_mail": "Soru, hata bildirimi ya da öneri için yaz. Uygulama sürümünü, cihazını ve seçili şehrini eklersen daha hızlı yardımcı oluruz.",
+        "shot_alt": "VakitApp ekranı:",
+    },
+    "en": {
+        "title": "VakitApp · Prayer times, Qibla and Quran",
+        "description": "VakitApp: official Diyanet prayer times, suhoor and prayer alarms that ring even in Silent mode, a monthly timetable, Qibla, Quran and Shared Khatm. For iPhone, iPad and Apple Watch.",
+        "card": "Official Diyanet prayer times, a suhoor alarm that rings even in Silent mode, Qibla, Quran and Shared Khatm with your family. Under a sky that changes through the day.",
+        "h1": "Prayer times, in the light of the day.",
+        "lead": "VakitApp helps you keep your prayer times and daily worship in one calm, reliable and beautiful app. Diyanet times in Türkiye and abroad, under a sky that moves with the day.",
+        "store_meta": "Free · iPhone, iPad and Apple Watch · iOS 17 or later",
+        "facts": [("Diyanet", "official prayer times"), ("7,000+", "cities abroad"), ("Alarms", "ring in Silent mode"), ("EN · DE · TR", "interface languages")],
+        "rows": [
+            ("home", "Home", "Next prayer at a glance.",
+             "A countdown, all six times of the day and a sky that changes colour with each prayer. Mark a prayer as performed in one tap.",
+             ["Second-by-second countdown to the next prayer", "Live countdown on the Lock Screen and in the Dynamic Island", "Mark prayers as performed and track them", "Widgets you can tap without opening the app"]),
+            ("calendar", "Monthly timetable", "The whole month, from Diyanet.",
+             "Official times from Türkiye's Presidency of Religious Affairs for every district in Türkiye. Abroad, the times of the nearest Diyanet city.",
+             ["Monthly prayer timetable", "More than 7,000 cities abroad, and city search worldwide", "Hijri date and Islamic days", "Makruh (karahat) time notice"]),
+            ("reminder", "Reminders and alarms", "Never miss a prayer.",
+             "An adhan notification for every prayer and a reminder before it. The suhoor alarm rings even when your phone is on Silent.",
+             ["Flexible reminders before each prayer", "Full-screen alarms that ring in Silent mode and Focus, with snooze", "Friday and holy night notifications", "A choice of adhan sounds"]),
+            ("quran", "Quran and worship", "Pick up where you left off.",
+             "114 surahs with translation and recitation. Start a Shared Khatm with family or friends and let everyone take a juz.",
+             ["Arabic text, tajweed colours, verse-by-verse recitation", "English translation by Pickthall and Turkish by Elmalılı", "Shared Khatm and a Prayer Guide", "Tasbih counter, dhikr, duas and Asma ul Husna"]),
+        ],
+        "privacy_eyebrow": "Privacy",
+        "privacy_h": "Your worship stays with you.",
+        "privacy_lead": "Your settings and prayer tracking are kept on your device. With Pro and iCloud sync, they're saved to your own iCloud account.",
+        "privacy_points": [("No account", "No name, email or phone number; download it and choose your city."), ("Location on your device", "Only the city you chose is sent to fetch prayer times; we don't store your location on our servers."), ("Calm screens", "No ads on the countdown or the Qibla screen. With Pro, no ads at all.")],
+        "privacy_link": "Read the privacy policy",
+        "faq_h": "Frequently asked questions",
+        "faq": [
+            ("Where do the prayer times come from?", "From the official service of Türkiye's Presidency of Religious Affairs (Diyanet) for every district in Türkiye. Abroad, the app uses the times of the Diyanet city closest to you."),
+            ("Is VakitApp free?", "Yes, it's free to download and use; the free version shows banner ads on some screens. Pro Lifetime is a one-time purchase: no ads, all adhan sounds, premium themes and icons, 25 locations and iCloud sync. The Pro Plus monthly subscription adds 45/60-minute reminders and up to 6 months of offline times."),
+            ("Does the alarm ring when my phone is on Silent?", "Yes. Suhoor and prayer alarms ring full screen even in Silent mode or with Focus on, and you can snooze them. Turn them on in Settings › Alarms; iOS 26 or later is required."),
+            ("Does it work offline?", "Downloaded prayer times are kept on your device, so you can see them without a connection. With Pro Plus you can download up to 6 months ahead."),
+            ("Which languages does it support?", "English, Deutsch and Türkçe. Some content, such as hadiths, duas, the Risale-i Nur library and Cevshen, is currently available in Turkish only."),
+            ("How do I manage my subscription?", "Manage or cancel it in iPhone Settings › [your name] › Subscriptions. To restore a purchase, use Restore in the app with the same Apple Account."),
+        ],
+        "cta_h": "Your prayer times, in your pocket.",
+        "cta_p": "Download VakitApp and choose your city. Let the sky tell you when it's time.",
+        "support_intro": "Questions about prayer times, alarms and notifications, Shared Khatm and purchases.",
+        "support_mail": "Write to us with questions, bug reports or suggestions. Including your app version, device and selected city helps us answer faster.",
+        "shot_alt": "VakitApp screen:",
+    },
+    "de": {
+        "title": "VakitApp · Gebetszeiten, Qibla und Koran",
+        "description": "VakitApp: offizielle Diyanet-Gebetszeiten, Suhur- und Gebetswecker, die auch im Lautlos-Modus klingeln, Gebetskalender, Qibla, Koran und gemeinsames Khatm. Für iPhone, iPad und Apple Watch.",
+        "card": "Offizielle Diyanet-Gebetszeiten, ein Suhur-Wecker, der auch im Lautlos-Modus klingelt, Qibla, Koran und gemeinsames Khatm mit der Familie.",
+        "h1": "Gebetszeiten im Licht des Tages.",
+        "lead": "VakitApp begleitet dich bei Gebetszeiten und täglicher Andacht: ruhig, zuverlässig und schön. Diyanet-Zeiten in der Türkei und im Ausland, unter einem Himmel, der sich mit dem Tag verändert.",
+        "store_meta": "Kostenlos · iPhone, iPad und Apple Watch · ab iOS 17",
+        "facts": [("Diyanet", "offizielle Gebetszeiten"), ("7.000+", "Städte im Ausland"), ("Wecker", "klingelt auch lautlos"), ("DE · EN · TR", "Sprachen der App")],
+        "rows": [
+            ("home", "Startbildschirm", "Das nächste Gebet auf einen Blick.",
+             "Ein Countdown, alle sechs Zeiten des Tages und ein Himmel, der sich mit jedem Gebet verfärbt. Hake ein verrichtetes Gebet mit einem Tippen ab.",
+             ["Sekundengenauer Countdown zum nächsten Gebet", "Live-Countdown auf dem Sperrbildschirm und in der Dynamic Island", "Gebete abhaken und verfolgen", "Widgets, die ohne Öffnen der App funktionieren"]),
+            ("calendar", "Gebetskalender", "Der ganze Monat, von der Diyanet.",
+             "Offizielle Zeiten des türkischen Präsidiums für Religionsangelegenheiten für jeden Bezirk der Türkei. Im Ausland die Zeiten der nächstgelegenen Diyanet-Stadt.",
+             ["Monatlicher Gebetskalender", "Über 7.000 Städte im Ausland, darunter viele in Deutschland, Österreich und der Schweiz", "Hidschri-Datum und islamische Tage", "Hinweis auf Karaha-Zeiten"]),
+            ("reminder", "Erinnerungen und Wecker", "Kein Gebet verpassen.",
+             "Ein Adhan-Hinweis zu jedem Gebet und eine Erinnerung davor. Der Suhur-Wecker klingelt auch, wenn dein iPhone lautlos ist.",
+             ["Flexible Erinnerungen vor jedem Gebet", "Vollbild-Wecker im Lautlos- und Fokus-Modus, mit Schlummerfunktion", "Mitteilungen zum Freitag und zu heiligen Nächten", "Verschiedene Adhan-Klänge"]),
+            ("quran", "Koran und Andacht", "Mach dort weiter, wo du aufgehört hast.",
+             "114 Suren mit Übersetzung und Rezitation. Starte mit Familie oder Freunden ein gemeinsames Khatm, bei dem jeder einen Dschuz übernimmt.",
+             ["Arabischer Text, Tadschwid-Farben, Rezitation Vers für Vers", "Englische Übersetzung von Pickthall, türkische von Elmalılı", "Gemeinsames Khatm und Gebetsanleitung", "Tasbih-Zähler, Dhikr, Duas und Asma ul Husna"]),
+        ],
+        "privacy_eyebrow": "Datenschutz",
+        "privacy_h": "Deine Andacht bleibt bei dir.",
+        "privacy_lead": "Deine Einstellungen und deine Gebetsverfolgung bleiben auf deinem Gerät. Mit Pro und iCloud-Synchronisierung werden sie in deinem eigenen iCloud-Konto gespeichert.",
+        "privacy_points": [("Kein Konto", "Kein Name, keine E-Mail, keine Telefonnummer; laden und Stadt wählen."), ("Standort auf dem Gerät", "Für die Gebetszeiten wird nur die gewählte Stadt gesendet; deinen Standort speichern wir nicht."), ("Ruhige Bildschirme", "Keine Werbung beim Countdown und auf dem Qibla-Bildschirm. Mit Pro gar keine Werbung.")],
+        "privacy_link": "Datenschutzerklärung lesen",
+        "faq_h": "Häufige Fragen",
+        "faq": [
+            ("Woher kommen die Gebetszeiten?", "Vom offiziellen Dienst des türkischen Präsidiums für Religionsangelegenheiten (Diyanet) für jeden Bezirk der Türkei. Im Ausland nutzt die App die Zeiten der Diyanet-Stadt, die dir am nächsten liegt."),
+            ("Ist VakitApp kostenlos?", "Ja, Laden und Nutzen sind kostenlos; die kostenlose Version zeigt auf einigen Bildschirmen Bannerwerbung. Pro Lifetime ist ein einmaliger Kauf: keine Werbung, alle Adhan-Klänge, Premium-Designs und -Symbole, 25 Orte und iCloud-Synchronisierung. Das Monatsabo Pro Plus ergänzt Erinnerungen 45/60 Minuten vorher und bis zu 6 Monate Offline-Zeiten."),
+            ("Klingelt der Wecker, wenn mein iPhone lautlos ist?", "Ja. Suhur- und Gebetswecker klingeln auch im Lautlos-Modus oder mit aktivem Fokus im Vollbild und lassen sich schlummern. Du schaltest sie unter Einstellungen › Wecker ein; dafür ist iOS 26 oder neuer nötig."),
+            ("Funktioniert die App offline?", "Geladene Gebetszeiten bleiben auf deinem Gerät, sodass du sie auch ohne Verbindung siehst. Mit Pro Plus kannst du bis zu 6 Monate im Voraus laden."),
+            ("Welche Sprachen gibt es?", "Deutsch, English und Türkçe. Einige Inhalte wie Hadithe, Duas, die Risale-i-Nur-Bibliothek und Cevşen gibt es derzeit nur auf Türkisch."),
+            ("Wie verwalte ich mein Abo?", "In den iPhone-Einstellungen unter [dein Name] › Abonnements kannst du es verwalten oder kündigen. Um einen Kauf wiederherzustellen, nutze in der App „Wiederherstellen“ mit demselben Apple-Account."),
+        ],
+        "cta_h": "Deine Gebetszeiten, immer dabei.",
+        "cta_p": "Lade VakitApp und wähle deine Stadt. Der Himmel sagt dir, wann es Zeit ist.",
+        "support_intro": "Fragen zu Gebetszeiten, Weckern und Mitteilungen, gemeinsamem Khatm und Käufen.",
+        "support_mail": "Schreib uns bei Fragen, Fehlern oder Vorschlägen. Mit App-Version, Gerät und gewählter Stadt können wir schneller helfen.",
+        "shot_alt": "VakitApp-Bildschirm:",
+    },
+}
+
+VAKIT_STORE_LABEL = {"de": ("Laden im", "App Store")}
+VAKIT_PRIVACY_DESCRIPTION = {
+    "tr": "VakitApp'in hangi verileri işlediği ve senin seçeneklerin.",
+    "en": "Which data VakitApp processes and what choices you have.",
+    "de": "Welche Daten VakitApp verarbeitet und welche Wahlmöglichkeiten du hast.",
+}
+VAKIT_TERMS_DESCRIPTION = {
+    "tr": "VakitApp'i kullanırken geçerli olan koşullar.",
+    "en": "The terms that apply when you use VakitApp.",
+    "de": "Die Bedingungen für die Nutzung von VakitApp.",
+}
+
+
+def vakit_store_button(lang: str) -> str:
+    small, big = VAKIT_STORE_LABEL.get(lang) or STORE_LABEL[lang]
+    return f'<a class="store" href="{VAKIT_STORE}">{APPLE}<span><small>{small}</small>{big}</span></a>'
+
+
+def vakit(lang: str) -> None:
+    t = VAKIT[lang]
+    shot = lambda name, eager=False: f'<img class="shot" src="/assets/vakit/{name}-{lang}.jpg" width="600" height="1304" alt="{t["shot_alt"]} {name}"{"" if eager else " loading=\"lazy\""} decoding="async">'
+    facts = "".join(f"<li><strong>{n}</strong><span>{label}</span></li>" for n, label in t["facts"])
+    rows = "".join(
+        f'''<section class="pc-row">
+<div class="pc-copy"><p class="eyebrow">{kicker}</p><h2>{h}</h2><p class="lead">{text}</p>
+<ul class="checks">{"".join(f"<li>{b}</li>" for b in bullets)}</ul></div>
+<div class="pc-shot">{shot(name)}</div>
+</section>'''
+        for name, kicker, h, text, bullets in t["rows"]
+    )
+    points = "".join(f"<li><strong>{h}</strong><span>{p_}</span></li>" for h, p_ in t["privacy_points"])
+    faqs = "".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q, a in t["faq"])
+    body = f"""<section class="pc-hero vakit-hero"><div class="wrap">
+<div class="pc-intro">
+<p class="app-id"><img src="/assets/vakit/icon.png" width="44" height="44" alt=""><span>VakitApp</span></p>
+<h1>{t["h1"]}</h1>
+<p class="lead">{t["lead"]}</p>
+<div class="pc-cta">{vakit_store_button(lang)}<a class="button ghost" href="{p("vakit-support", lang)}">{UI[lang]["support"]}</a></div>
+<p class="store-meta">{t["store_meta"]}</p>
+</div>
+<div class="pc-stage">
+<div class="back">{shot("onboarding", True)}</div>
+<div class="front">{shot("home", True)}</div>
+</div>
+</div></section>
+<div class="wrap">
+<ul class="facts">{facts}</ul>
+{rows}
+</div>
+<section class="pc-privacy"><div class="wrap">
+<div class="pc-copy"><p class="eyebrow">{t["privacy_eyebrow"]}</p><h2>{t["privacy_h"]}</h2><p class="lead">{t["privacy_lead"]}</p>
+<ul class="points">{points}</ul>
+<a class="more" href="{p("vakit-privacy", lang)}">{t["privacy_link"]} →</a></div>
+<div class="pc-shot">{shot("qibla")}</div>
+</div></section>
+<div class="wrap">
+<section class="section faq-list narrow">
+<h2>{t["faq_h"]}</h2>
+{faqs}
+</section>
+<section class="pc-final">
+<img class="app-icon" src="/assets/vakit/icon.png" alt="VakitApp" width="96" height="96">
+<h2>{t["cta_h"]}</h2>
+<p>{t["cta_p"]}</p>
+{vakit_store_button(lang)}
+</section>
+</div>"""
+    page("vakit", lang, t["title"], t["description"], body, theme="vakit")
+
+
+def vakit_support(lang: str) -> None:
+    t = VAKIT[lang]
+    title = "VakitApp " + UI[lang]["support"]
+    body = f'''<div class="wrap narrow prose"><h1>{title}</h1><p class="meta">{t["support_intro"]}</p><p>{t["support_mail"]}</p><p><a href="mailto:{STUDY_MAIL}?subject=VakitApp">{STUDY_MAIL}</a></p><h2>{t["faq_h"]}</h2>
+{faq(t["faq"])}<p class="meta"><a href="{p("vakit-privacy", lang)}">{UI[lang]["privacy"]}</a> · <a href="{p("vakit-terms", lang)}">{UI[lang]["terms"]}</a></p></div>'''
+    page("vakit-support", lang, title, t["support_intro"], body, theme="vakit")
+
+
+def vakit_privacy(lang: str) -> None:
+    privacy(ROOT / "content" / f"vakitapp-privacy-{lang}.md", "vakit-privacy", lang,
+            VAKIT_PRIVACY_DESCRIPTION[lang], "vakit")
+
+
+def vakit_terms(lang: str) -> None:
+    privacy(ROOT / "content" / f"vakitapp-terms-{lang}.md", "vakit-terms", lang,
+            VAKIT_TERMS_DESCRIPTION[lang], "vakit")
+
+
 if __name__ == "__main__":
+    for lang in ("tr", "en", "de"):
+        vakit(lang)
+        vakit_support(lang)
+        vakit_privacy(lang)
+        vakit_terms(lang)
     for lang in ("tr", "en"):
         home(lang)
         study(lang)

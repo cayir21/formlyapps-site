@@ -294,3 +294,46 @@ tr:last-child td { border-bottom: 0; }
   .theme-bite .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%23FF97A9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
 }
 @media (max-width: 900px) { .pc-muzi { width: 76px; bottom: 50px; left: -2%; } }
+
+/* VakitApp: uygulamanın gün boyu değişen gökyüzü (App Store görselleriyle aynı dil). */
+.theme-vakit { --accent: #2E5288; --accent-soft: #DFE7F3; }
+@media (prefers-color-scheme: dark) { .theme-vakit { --accent: #9DB9E8; --accent-soft: #22304A; } }
+.app-card .mascot.app-icon { height: 96px; border-radius: 22%; box-shadow: 0 6px 16px -6px rgb(0 0 0 / .3); }
+.vakit-hero { color: #FFFFFF; border-bottom: 0; background:
+  radial-gradient(circle at 90% 9%, rgb(255 236 200 / .95) 0 40px, rgb(255 214 150 / .3) 42px, transparent 140px),
+  linear-gradient(#1D355E, #335A8C 42%, #7E9BC0 74%, #E2BE98); }
+.vakit-hero .lead, .vakit-hero .store-meta { color: rgb(255 255 255 / .82); }
+.vakit-hero .store { background: #FFFFFF; color: #1D355E; }
+.vakit-hero .button.ghost { border-color: rgb(255 255 255 / .45); color: #FFFFFF; }
+.vakit-hero h1 { max-width: 12ch; }
+.shot { display: block; width: 100%; height: auto; border-radius: 30px; box-shadow: 0 40px 80px -30px rgb(10 20 40 / .5), 0 18px 36px -18px rgb(10 20 40 / .4); }
+.pc-shot .shot { position: relative; width: min(300px, 78%); }
+.theme-vakit .pc-privacy { --accent: #9DB9E8; --accent-soft: #22304A; background: #141C2B; }
+.theme-vakit .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%232E5288' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.theme-vakit .pc-final img { width: 96px; rotate: 0deg; border-radius: 22%; }
+@media (prefers-color-scheme: dark) {
+  .theme-vakit .checks li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M6 10.5l2.6 2.6L14 7.6' fill='none' stroke='%239DB9E8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+}
+@media (max-width: 480px) { .app-card .mascot.app-icon { height: 72px; } }
+/* VakitApp görselleri kendi gökyüzünü taşıdığı için arkalarında kart yerine gökyüzü ışığı: üstte ay/güneş parıltısı, altta şafak. */
+.theme-vakit .pc-shot::before { inset: -6% -10%; border-radius: 50%; filter: blur(28px); opacity: .9; background:
+  radial-gradient(38% 30% at 30% 22%, rgb(255 226 170 / .55), transparent 70%),
+  radial-gradient(60% 55% at 50% 45%, rgb(94 128 190 / .45), transparent 72%),
+  radial-gradient(55% 35% at 60% 88%, rgb(232 170 140 / .4), transparent 70%); }
+.theme-vakit .pc-row:nth-of-type(even) .pc-shot::before { background:
+  radial-gradient(38% 30% at 70% 22%, rgb(220 228 255 / .5), transparent 70%),
+  radial-gradient(60% 55% at 50% 45%, rgb(88 96 170 / .45), transparent 72%),
+  radial-gradient(55% 35% at 40% 88%, rgb(150 120 200 / .35), transparent 70%); }
+@media (prefers-color-scheme: dark) {
+  .theme-vakit .pc-shot::before { opacity: .75; }
+}
+@media (prefers-color-scheme: light) {
+  .theme-vakit .pc-shot::before { opacity: 1; background:
+    radial-gradient(38% 30% at 30% 22%, rgb(255 200 120 / .75), transparent 70%),
+    radial-gradient(60% 55% at 50% 45%, rgb(80 120 190 / .55), transparent 72%),
+    radial-gradient(55% 35% at 60% 88%, rgb(235 150 115 / .6), transparent 70%); }
+  .theme-vakit .pc-row:nth-of-type(even) .pc-shot::before { background:
+    radial-gradient(38% 30% at 70% 22%, rgb(170 190 255 / .7), transparent 70%),
+    radial-gradient(60% 55% at 50% 45%, rgb(80 90 170 / .5), transparent 72%),
+    radial-gradient(55% 35% at 40% 88%, rgb(160 120 210 / .5), transparent 70%); }
+}
