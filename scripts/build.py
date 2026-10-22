@@ -3,8 +3,8 @@
 
 Kullanım: python3 scripts/build.py [FormlyStudy reposunun yolu]
 Varsayılan yol: ../İOS/FormlyStudy. FormlyStudy gizlilik politikası oradaki
-docs/legal/privacy-policy-tr.md ve privacy-policy-en.md'den, FormlyConvert'inki
-content/formlyconvert-privacy-en.md'den üretilir; diğer metinler bu dosyadadır.
+docs/legal/privacy-policy-tr.md ve privacy-policy-en.md'den, FormlyConvert'in gizlilik ve
+kullanım koşulları content/formlyconvert-{privacy,terms}-{tr,en}.md'den üretilir; diğer metinler bu dosyadadır.
 
 Türkçe sayfalar kökte, İngilizceleri /en/ altında. Her sayfanın adresleri PATHS'te eşlenir.
 VakitApp sayfalarının ayrıca Almancası var (/de/vakitapp/); diğer sayfalarda Almanca yoksa İngilizcesine bağlanılır.
@@ -23,7 +23,7 @@ BITE_STORE = "https://apps.apple.com/app/id6821417196"
 VAKIT_STORE = "https://apps.apple.com/app/id6759460194"
 STUDY_STORE = "https://apps.apple.com/app/id6819411851"
 STUDY_MAIL = "destek@formlyapps.com"
-CONVERT_MAIL = "formlyconvert@gmail.com"
+CONVERT_MAIL = "destek@formlyapps.com"
 EULA = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
 
 PATHS = {
@@ -38,6 +38,7 @@ PATHS = {
     "convert-support": {"tr": "/formlyconvert/destek/", "en": "/en/formlyconvert/support/"},
     "study-privacy": {"tr": "/formlystudy/gizlilik/", "en": "/en/formlystudy/privacy/"},
     "convert-privacy": {"tr": "/formlyconvert/gizlilik/", "en": "/en/formlyconvert/privacy/"},
+    "convert-terms": {"tr": "/formlyconvert/kosullar/", "en": "/en/formlyconvert/terms/"},
     "vakit": {"tr": "/vakitapp/", "en": "/en/vakitapp/", "de": "/de/vakitapp/"},
     "vakit-support": {"tr": "/vakitapp/destek/", "en": "/en/vakitapp/support/", "de": "/de/vakitapp/hilfe/"},
     "vakit-privacy": {"tr": "/vakitapp/gizlilik/", "en": "/en/vakitapp/privacy/", "de": "/de/vakitapp/datenschutz/"},
@@ -626,24 +627,24 @@ def convert_support(lang: str) -> None:
     privacy = p("convert-privacy", lang)
     if lang == "tr":
         title, description, h2 = "FormlyConvert Destek", "FormlyConvert için destek ve sık sorulan sorular.", "Sık sorulanlar"
-        intro = f'Destek talepleri için <a href="mailto:{CONVERT_MAIL}">{CONVERT_MAIL}</a> adresine yaz. Lütfen uygulama sürümünü ve yaşadığın sorunu kısaca belirt.'
+        intro = f'Destek talepleri için <a href="mailto:{CONVERT_MAIL}?subject=FormlyConvert">{CONVERT_MAIL}</a> adresine yaz. Lütfen uygulama sürümünü ve yaşadığın sorunu kısaca belirt.'
         items = [
             ("Aboneliğimi nasıl iptal ederim?", "Abonelikler Apple üzerinden yönetilir: iPhone'da Ayarlar › [adın] › Abonelikler › FormlyConvert. İptal ettiğinde Pro, dönem sonuna kadar açık kalır."),
             ("Satın aldığım Pro görünmüyor.", "Uygulamadaki Pro ekranından satın alımları geri yükle. Aynı Apple hesabıyla giriş yapmış olmalısın. Sorun sürerse bize yaz."),
             ("Dönüştürdüğüm dosyalar nerede?", "Dönüştürülen dosyalar uygulamanın Geçmiş bölümünde durur; oradan paylaşabilir ya da Dosyalar'a kaydedebilirsin."),
             ("Bir dosyayı başka uygulamadan nasıl açarım?", "Mail, WhatsApp ya da Dosyalar'da dosyaya uzun bas, Paylaş'ı seç ve FormlyConvert'i seç. Dosya, ona uygun araçlarla birlikte açılır."),
         ]
-        legal = f'<a href="{privacy}">Gizlilik politikası</a> · Kullanım koşulları: <a href="{EULA}">Apple standart son kullanıcı sözleşmesi</a>.'
+        legal = f'<a href="{privacy}">Gizlilik politikası</a> · <a href="{p("convert-terms", lang)}">Kullanım koşulları</a>'
     else:
         title, description, h2 = "FormlyConvert Support", "Support and frequently asked questions for FormlyConvert.", "Frequently asked questions"
-        intro = f'For support requests, write to <a href="mailto:{CONVERT_MAIL}">{CONVERT_MAIL}</a>. Please include your app version and a short description of the issue.'
+        intro = f'For support requests, write to <a href="mailto:{CONVERT_MAIL}?subject=FormlyConvert">{CONVERT_MAIL}</a>. Please include your app version and a short description of the issue.'
         items = [
             ("How do I cancel my subscription?", "Subscriptions are managed by Apple: on your iPhone, go to Settings › [your name] › Subscriptions › FormlyConvert. After you cancel, Pro stays active until the end of the current period."),
             ("My Pro purchase doesn't show up.", "Restore your purchases from the Pro screen in the app. You need to be signed in with the same Apple Account. If the problem continues, write to us."),
             ("Where are my converted files?", "Converted files are kept in the app's History, where you can share them or save them to Files."),
             ("How do I open a file from another app?", "In Mail, WhatsApp or Files, touch and hold the file, choose Share, then choose FormlyConvert. The file opens with the tools that fit it."),
         ]
-        legal = f'<a href="{privacy}">Privacy policy</a> · Terms of use: <a href="{EULA}">Apple Standard End User License Agreement</a>.'
+        legal = f'<a href="{privacy}">Privacy policy</a> · <a href="{p("convert-terms", lang)}">Terms of use</a>'
     body = f"""<div class="wrap narrow prose">
 <h1>{title}</h1>
 <p class="meta">{intro}</p>
@@ -735,10 +736,15 @@ def study_privacy(lang: str) -> None:
 
 
 def convert_privacy(lang: str) -> None:
-    # FormlyConvert politikasının yalnız İngilizcesi var; Türkçe sayfa da aynı metni gösterir.
-    note = "Bu politikanın şu an yalnız İngilizce sürümü var." if lang == "tr" else ""
-    privacy(ROOT / "content" / "formlyconvert-privacy-en.md", "convert-privacy", lang,
-            "How FormlyConvert handles documents and other data.", "convert", doc_lang="en", note=note)
+    description = {"tr": "FormlyConvert'in belgelerini ve diğer verileri nasıl işlediği ve senin seçeneklerin.",
+                   "en": "How FormlyConvert handles your documents and other data, and what choices you have."}[lang]
+    privacy(ROOT / "content" / f"formlyconvert-privacy-{lang}.md", "convert-privacy", lang, description, "convert")
+
+
+def convert_terms(lang: str) -> None:
+    description = {"tr": "FormlyConvert'i kullanırken geçerli koşullar: abonelikler, Belge Asistanı ve sorumluluklar.",
+                   "en": "The terms that apply when you use FormlyConvert: subscriptions, the Document Assistant and responsibilities."}[lang]
+    privacy(ROOT / "content" / f"formlyconvert-terms-{lang}.md", "convert-terms", lang, description, "convert")
 
 
 
@@ -1139,6 +1145,7 @@ if __name__ == "__main__":
         convert_support(lang)
         study_privacy(lang)
         convert_privacy(lang)
+        convert_terms(lang)
         bite(lang)
         bite_support(lang)
         bite_privacy(lang)
